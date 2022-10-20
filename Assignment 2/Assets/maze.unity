@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d750ca444cd25346bb50459968d3bb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: 100
+  size: 10
   cell: {fileID: 2190178942387013055, guid: 69a6a9020a5bbfc48b0eb35fdebeac76, type: 3}
   wall: {fileID: 2187565283492994992, guid: 85148198b98f03f4e8f7b5f8f47b11fd, type: 3}
 --- !u!4 &622109178

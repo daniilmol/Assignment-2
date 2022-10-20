@@ -50,8 +50,9 @@ public class MazeGenerator : MonoBehaviour {
     private void DrawBorders(int cellCount){
         float startingPoint = -0.5f;
         int indexVariable = 0;
-        int entrance = Random.Range(1, cellCount);
-        int exit = Random.Range(cellCount, cellCount * 2);
+        int entrance = Random.Range(1, cellCount - 1);
+        int exit = Random.Range(1, cellCount - 1);
+        print("Entrance: " + entrance + " Exit: " + exit);
         for(int y = 0; y < cellCount * 2; y++){
             if(y < cellCount){
                 if (y != entrance) {
@@ -59,8 +60,13 @@ public class MazeGenerator : MonoBehaviour {
                 }
             }
             else{
-                if (y != exit) {
+                print(indexVariable);
+                if (indexVariable != exit)
+                {
                     GameObject wall = Instantiate(this.wall, new Vector3(startingPoint + size, 1, indexVariable++), Quaternion.identity);
+                }
+                else {
+                    indexVariable++;
                 }
             }
         }
