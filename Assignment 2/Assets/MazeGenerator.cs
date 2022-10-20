@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEditor.AI;
 
 public class MazeGenerator : MonoBehaviour {
 
     [SerializeField] int size;
     [SerializeField] GameObject cell;
     [SerializeField] GameObject wall;
+    int walls = 0;
     Cell[,] cells;
     private int wallCount;
     private float timer = 2f;
@@ -24,12 +26,15 @@ public class MazeGenerator : MonoBehaviour {
         DrawBorders(size);
         DrawWalls(size);
         Cell startingCell = GetStartingPoint();
+        NavMeshBuilder.ClearAllNavMeshes();
+        NavMeshBuilder.BuildNavMesh();
         DepthFirstSearch(startingCell);
         for(int x = 0; x < size; x++){
             for(int y = 0; y < size; y++){
                 Debug.Log(cells[x,y].isVisited());
             }
         }
+        print("After DFS: " + walls);
     }
 
     private void DrawCells(Cell[,] cell){
@@ -63,12 +68,14 @@ public class MazeGenerator : MonoBehaviour {
     }
 
     private void DrawWalls(int cellCount){
+        int walls = 0;
         float startingPoint = 0.5f;
         int indexVariable = 0;
         int passedRows = 0;
         for(int y = indexVariable; passedRows < cellCount - 1; y++){
             if(y < cellCount){
                 GameObject wall = Instantiate(this.wall, new Vector3(startingPoint + passedRows, 1, y), Quaternion.identity);
+                walls++;
             }else{
                 passedRows++;
                 y = -1;
@@ -79,11 +86,13 @@ public class MazeGenerator : MonoBehaviour {
         for(float x = indexVariable; passedRows < cellCount - 1; x++){
             if(x < cellCount){
                 GameObject wall = Instantiate(this.wall, new Vector3(x, 1, startingPoint + passedRows), Quaternion.Euler(0, 90f, 0));
+                walls++;
             }else{
                 passedRows++;
                 x = -1;
             }
         }
+        print("Before DFS: " + walls);
     }
 
     private Cell GetStartingPoint(){
@@ -102,36 +111,40 @@ public class MazeGenerator : MonoBehaviour {
                 case 0: 
                     directions = directions.Where((source, index) => index != directionIndex).ToArray();
                     if(currentCell.GetX() - 1 >= 0 && !cells[currentCell.GetX() - 1, currentCell.GetY()].isVisited()){
+                        DepthFirstSearch(cells[currentCell.GetX() - 1, currentCell.GetY()]);
+
                         DestroyWall(currentCell.GetRayCastPoint(), cells[currentCell.GetX() - 1, currentCell.GetY()].GetRayCastPoint());
                         //StartCoroutine(StartLifetime(cells[currentCell.GetX() - 1, currentCell.GetY()]));
-                        DepthFirstSearch(cells[currentCell.GetX() - 1, currentCell.GetY()]);
                     }
                     break;
                 case 1: 
                     directions = directions.Where((source, index) => index != directionIndex).ToArray();
                     if(currentCell.GetX() + 1 < size && !cells[currentCell.GetX() + 1, currentCell.GetY()].isVisited()){
+                        DepthFirstSearch(cells[currentCell.GetX() + 1, currentCell.GetY()]);
+
                         DestroyWall(currentCell.GetRayCastPoint(), cells[currentCell.GetX() + 1, currentCell.GetY()].GetRayCastPoint());
                         //StartCoroutine(StartLifetime(cells[currentCell.GetX() + 1, currentCell.GetY()]));
 
-                        DepthFirstSearch(cells[currentCell.GetX() + 1, currentCell.GetY()]);
                     }
                     break;
                 case 2: 
                     directions = directions.Where((source, index) => index != directionIndex).ToArray();
                     if(currentCell.GetY() + 1 < size && !cells[currentCell.GetX(), currentCell.GetY() + 1].isVisited()){
+                        DepthFirstSearch(cells[currentCell.GetX(), currentCell.GetY() + 1]);
+
                         DestroyWall(currentCell.GetRayCastPoint(), cells[currentCell.GetX(), currentCell.GetY() + 1].GetRayCastPoint());
                                                 //StartCoroutine(StartLifetime(cells[currentCell.GetX(), currentCell.GetY() + 1]));
 
-                        DepthFirstSearch(cells[currentCell.GetX(), currentCell.GetY() + 1]);
                     }
                     break;
                 case 3: 
                     directions = directions.Where((source, index) => index != directionIndex).ToArray();
                     if(currentCell.GetY() - 1 >= 0 && !cells[currentCell.GetX(), currentCell.GetY() - 1].isVisited()){
+                        DepthFirstSearch(cells[currentCell.GetX(), currentCell.GetY() - 1]);
+
                         DestroyWall(currentCell.GetRayCastPoint(), cells[currentCell.GetX(), currentCell.GetY() - 1].GetRayCastPoint());
                                                 //StartCoroutine(StartLifetime(cells[currentCell.GetX(), currentCell.GetY() - 1]));
 
-                        DepthFirstSearch(cells[currentCell.GetX(), currentCell.GetY() - 1]);
                     }
                     break;
             }
@@ -140,14 +153,14 @@ public class MazeGenerator : MonoBehaviour {
 
     private void DestroyWall(GameObject currentPoint, GameObject targetPoint) {
         RaycastHit rayHit;
+        Vector3 dir = targetPoint.transform.position - currentPoint.transform.position;
         Ray ray = new Ray(currentPoint.transform.position, (targetPoint.transform.position - currentPoint.transform.position).normalized * 10);
-        //Debug.DrawRay(transform.position, (player.transform.position - transform.position).normalized * 10);
-        if (Physics.Raycast(ray, out rayHit, 100))
+        if (Physics.Raycast(currentPoint.transform.position, dir, out rayHit, 5))
         {
-            if (rayHit.transform.gameObject.tag == "Wall")
+            if (rayHit.collider.gameObject.tag == "Wall")
             {
-
-                Destroy(rayHit.transform.gameObject);
+                walls--;
+                Destroy(rayHit.collider.gameObject);
             }
         }
     }
