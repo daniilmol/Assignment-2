@@ -106,15 +106,15 @@ NavMeshSettings:
   m_BuildSettings:
     serializedVersion: 2
     agentTypeID: 0
-    agentRadius: 0.5
-    agentHeight: 2
+    agentRadius: 0.2
+    agentHeight: 1
     agentSlope: 45
     agentClimb: 0.4
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
     minRegionArea: 2
     manualCellSize: 0
-    cellSize: 0.16666667
+    cellSize: 0.06666667
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
@@ -155,6 +155,7 @@ MonoBehaviour:
   size: 10
   cell: {fileID: 2190178942387013055, guid: 69a6a9020a5bbfc48b0eb35fdebeac76, type: 3}
   wall: {fileID: 2187565283492994992, guid: 85148198b98f03f4e8f7b5f8f47b11fd, type: 3}
+  enemy: {fileID: 6077433209843676620, guid: 789d91925bcf31145a7d721d1211b1d6, type: 3}
 --- !u!4 &622109178
 Transform:
   m_ObjectHideFlags: 0

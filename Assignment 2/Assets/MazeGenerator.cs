@@ -9,8 +9,9 @@ public class MazeGenerator : MonoBehaviour {
     [SerializeField] int size;
     [SerializeField] GameObject cell;
     [SerializeField] GameObject wall;
+    [SerializeField] GameObject enemy;
     int walls = 0;
-    Cell[,] cells;
+    public static Cell[,] cells;
     private int wallCount;
     private float timer = 2f;
 
@@ -26,15 +27,21 @@ public class MazeGenerator : MonoBehaviour {
         DrawBorders(size);
         DrawWalls(size);
         Cell startingCell = GetStartingPoint();
-        NavMeshBuilder.ClearAllNavMeshes();
-        NavMeshBuilder.BuildNavMesh();
         DepthFirstSearch(startingCell);
         for(int x = 0; x < size; x++){
             for(int y = 0; y < size; y++){
                 Debug.Log(cells[x,y].isVisited());
             }
         }
-        print("After DFS: " + walls);
+        NavMeshBuilder.ClearAllNavMeshes();
+        NavMeshBuilder.BuildNavMesh();
+        SpawnEnemy();
+    }
+
+    private void SpawnEnemy() {
+        int x = Random.Range(0, size);
+        int y = Random.Range(0, size);
+        Instantiate(enemy, cells[x, y].transform.position, Quaternion.identity);
     }
 
     private void DrawCells(Cell[,] cell){
