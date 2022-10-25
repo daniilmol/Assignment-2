@@ -5,45 +5,56 @@ using System.Linq;
 using UnityEditor.AI;
 
 public class MazeGenerator : MonoBehaviour {
-
+    /**
+    * Size of width and length
+    */
     [SerializeField] int size;
+    /**
+    * Floor prefab
+    */
     [SerializeField] GameObject cell;
+    /**
+    * Wall prefab made up of quads
+    */
     [SerializeField] GameObject wall;
+    /**
+    * Enemy prefab
+    */
     [SerializeField] GameObject enemy;
-    int walls = 0;
+    /**
+    * 2D Array of cells to represent each one by their x and z positions
+    */
     public static Cell[,] cells;
-    private int wallCount;
-    private float timer = 2f;
 
-    public IEnumerator StartLifetime(Cell curCell)
-    {
-        yield return new WaitForSeconds(timer);
-        DepthFirstSearch(curCell);
-    }
+    /**
+    * Initializes 2D array, fills them, instantiates the cell prefabs
+    * Draws the surrounding borders, draws walls on every cell's edge
+    * Begins DFS on a random point, builds a nav mesh for enemy and spawns enemy
+    */
     void Start(){
         cells = new Cell[size,size];
-        wallCount = size * 2 - 2;
         DrawCells(cells);
         DrawBorders(size);
         DrawWalls(size);
         Cell startingCell = GetStartingPoint();
         DepthFirstSearch(startingCell);
-        for(int x = 0; x < size; x++){
-            for(int y = 0; y < size; y++){
-                Debug.Log(cells[x,y].isVisited());
-            }
-        }
         NavMeshBuilder.ClearAllNavMeshes();
         NavMeshBuilder.BuildNavMesh();
         SpawnEnemy();
     }
 
+    /**
+    * Spawns enemy in a random position
+    */
     private void SpawnEnemy() {
         int x = Random.Range(0, size);
         int y = Random.Range(0, size);
         Instantiate(enemy, cells[x, y].transform.position, Quaternion.identity);
     }
 
+    /**
+    * Fills 2D array of cells and instantiates the cells
+    */
     private void DrawCells(Cell[,] cell){
         for(int x = 0; x < size; x++){
             for(int y = 0; y < size; y++){
@@ -54,12 +65,14 @@ public class MazeGenerator : MonoBehaviour {
         }
     }
 
+    /**
+    * Instantiates surrounding maze borders with one entrance and exit
+    */
     private void DrawBorders(int cellCount){
         float startingPoint = -0.5f;
         int indexVariable = 0;
         int entrance = Random.Range(1, cellCount - 1);
         int exit = Random.Range(1, cellCount - 1);
-        print("Entrance: " + entrance + " Exit: " + exit);
         for(int y = 0; y < cellCount * 2; y++){
             if(y < cellCount){
                 if (y != entrance) {
@@ -87,6 +100,9 @@ public class MazeGenerator : MonoBehaviour {
         }
     }
 
+    /**
+    * Instantiates all walls at the edges of every cell
+    */
     private void DrawWalls(int cellCount){
         int walls = 0;
         float startingPoint = 0.5f;
@@ -112,18 +128,24 @@ public class MazeGenerator : MonoBehaviour {
                 x = -1;
             }
         }
-        print("Before DFS: " + walls);
     }
 
+    /**
+    * Returns a random cell from the 2D array
+    */
     private Cell GetStartingPoint(){
         int startX = Random.Range(0, size);
         int startY = Random.Range(0, size);
         return cells[startX, startY];
     }
 
+    /**
+    * Recursive DFS Algorithm to visit unvisited cells, destroying the walls
+    * between them, setting the newly visited cell as the current cell
+    * backtracks when no available neighbors left to visit
+    */
     private void DepthFirstSearch(Cell currentCell){
         cells[currentCell.GetX(), currentCell.GetY()].visit();
-        Debug.Log("DFSing");
         int[] directions = {0, 1, 2, 3};
         while(directions.Length > 0){
             int directionIndex = Random.Range(0, directions.Length);
@@ -132,38 +154,28 @@ public class MazeGenerator : MonoBehaviour {
                     directions = directions.Where((source, index) => index != directionIndex).ToArray();
                     if(currentCell.GetX() - 1 >= 0 && !cells[currentCell.GetX() - 1, currentCell.GetY()].isVisited()){
                         DepthFirstSearch(cells[currentCell.GetX() - 1, currentCell.GetY()]);
-
                         DestroyWall(currentCell.GetRayCastPoint(), cells[currentCell.GetX() - 1, currentCell.GetY()].GetRayCastPoint());
-                        //StartCoroutine(StartLifetime(cells[currentCell.GetX() - 1, currentCell.GetY()]));
                     }
                     break;
                 case 1: 
                     directions = directions.Where((source, index) => index != directionIndex).ToArray();
                     if(currentCell.GetX() + 1 < size && !cells[currentCell.GetX() + 1, currentCell.GetY()].isVisited()){
                         DepthFirstSearch(cells[currentCell.GetX() + 1, currentCell.GetY()]);
-
                         DestroyWall(currentCell.GetRayCastPoint(), cells[currentCell.GetX() + 1, currentCell.GetY()].GetRayCastPoint());
-                        //StartCoroutine(StartLifetime(cells[currentCell.GetX() + 1, currentCell.GetY()]));
-
                     }
                     break;
                 case 2: 
                     directions = directions.Where((source, index) => index != directionIndex).ToArray();
                     if(currentCell.GetY() + 1 < size && !cells[currentCell.GetX(), currentCell.GetY() + 1].isVisited()){
                         DepthFirstSearch(cells[currentCell.GetX(), currentCell.GetY() + 1]);
-
                         DestroyWall(currentCell.GetRayCastPoint(), cells[currentCell.GetX(), currentCell.GetY() + 1].GetRayCastPoint());
-                                                //StartCoroutine(StartLifetime(cells[currentCell.GetX(), currentCell.GetY() + 1]));
-
                     }
                     break;
                 case 3: 
                     directions = directions.Where((source, index) => index != directionIndex).ToArray();
                     if(currentCell.GetY() - 1 >= 0 && !cells[currentCell.GetX(), currentCell.GetY() - 1].isVisited()){
                         DepthFirstSearch(cells[currentCell.GetX(), currentCell.GetY() - 1]);
-
                         DestroyWall(currentCell.GetRayCastPoint(), cells[currentCell.GetX(), currentCell.GetY() - 1].GetRayCastPoint());
-                                                //StartCoroutine(StartLifetime(cells[currentCell.GetX(), currentCell.GetY() - 1]));
 
                     }
                     break;
@@ -171,6 +183,9 @@ public class MazeGenerator : MonoBehaviour {
         }
     }
 
+    /**
+    * Destroys the wall between the current cell and the visited neighbor cell
+    */
     private void DestroyWall(GameObject currentPoint, GameObject targetPoint) {
         RaycastHit rayHit;
         Vector3 dir = targetPoint.transform.position - currentPoint.transform.position;
@@ -179,7 +194,6 @@ public class MazeGenerator : MonoBehaviour {
         {
             if (rayHit.collider.gameObject.tag == "Wall")
             {
-                walls--;
                 Destroy(rayHit.collider.gameObject);
             }
         }
