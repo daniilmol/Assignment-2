@@ -10,6 +10,10 @@ public class MazeGenerator : MonoBehaviour {
     */
     [SerializeField] int size;
     /**
+    * Start point location for z value
+    */
+    [SerializeField] float startPointZ;
+    /**
     * Floor prefab
     */
     [SerializeField] GameObject cell;
@@ -40,6 +44,7 @@ public class MazeGenerator : MonoBehaviour {
         DepthFirstSearch(startingCell);
         NavMeshBuilder.ClearAllNavMeshes();
         NavMeshBuilder.BuildNavMesh();
+        GameObject.Find("Main Camera").transform.position = new Vector3(0, 1, startPointZ);
         SpawnEnemy();
     }
 
@@ -72,11 +77,12 @@ public class MazeGenerator : MonoBehaviour {
         float startingPoint = -0.5f;
         int indexVariable = 0;
         int entrance = Random.Range(1, cellCount - 1);
-        int exit = Random.Range(1, cellCount - 1);
+        int exit = Random.Range(1, cellCount - 1);        
         for(int y = 0; y < cellCount * 2; y++){
             if(y < cellCount){
                 if (y != entrance) {
                     GameObject wall = Instantiate(this.wall, new Vector3(startingPoint, 1, y), Quaternion.identity);
+                    startPointZ = entrance;
                 }
             }
             else{
