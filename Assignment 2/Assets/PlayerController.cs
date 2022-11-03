@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
 
     //switch of through wall ability
     private void SwitchAbility(InputAction.CallbackContext obj) {
-        this.GetComponent<Collider>().enabled = !this.GetComponent<Collider>().enabled;
+        this.GetComponent<Collider>().isTrigger = !this.GetComponent<Collider>().isTrigger;
     }
 
     //called every physics update
