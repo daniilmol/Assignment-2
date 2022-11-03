@@ -35,6 +35,10 @@ public class MazeGenerator : MonoBehaviour {
     */
     [SerializeField] GameObject enemy;
     /**
+    * Win trigger prefab
+    */
+    [SerializeField] GameObject trigger;
+    /**
     * 2D Array of cells to represent each one by their x and z positions
     */
     public static Cell[,] cells;
@@ -51,6 +55,10 @@ public class MazeGenerator : MonoBehaviour {
     * Input actions for reset
     */
     private InputActions inputActions;
+    /**
+    * Exit cell index
+    */
+    private int exitIndex;
 
     /**
     * Initializes 2D array, fills them, instantiates the cell prefabs
@@ -71,6 +79,7 @@ public class MazeGenerator : MonoBehaviour {
         playerScale.z = 0;
         Instantiate(player, cells[0, startPointZ].transform.position + playerScale, Quaternion.identity);
         SpawnEnemy();
+        Instantiate(trigger, cells[size - 1, exitIndex].transform.position, Quaternion.identity);
     }
 
     /**
@@ -139,7 +148,8 @@ public class MazeGenerator : MonoBehaviour {
         float startingPoint = -0.5f;
         int indexVariable = 0;
         int entrance = Random.Range(1, cellCount - 1);
-        int exit = Random.Range(1, cellCount - 1);        
+        int exit = Random.Range(1, cellCount - 1);
+        exitIndex = exit;
         for(int y = 0; y < cellCount * 2; y++){
             if(y < cellCount){
                 if (y != entrance) {
