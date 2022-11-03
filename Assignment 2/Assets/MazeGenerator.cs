@@ -78,7 +78,7 @@ public class MazeGenerator : MonoBehaviour {
         playerScale.x = 0;
         playerScale.z = 0;
         Instantiate(player, cells[0, startPointZ].transform.position + playerScale, Quaternion.identity);
-        player.GetComponent<PlayerController>().SetStartingPosition(cells[0, startPointZ].transform.position + playerScale);
+        //player.GetComponent<PlayerController>().SetStartingPosition(cells[0, startPointZ].transform.position + playerScale);
         SpawnEnemy();
         Instantiate(trigger, cells[size - 1, exitIndex].transform.position, Quaternion.identity);
     }
@@ -116,7 +116,7 @@ public class MazeGenerator : MonoBehaviour {
         cellX = Random.Range(0, size);
         cellY = Random.Range(0, size);
         Instantiate(enemy, cells[cellX, cellY].transform.position, Quaternion.identity);
-        enemy.GetComponent<EnemyBehaviour>().SetStartingPosition(cells[cellX, cellY].transform.position);
+        //enemy.GetComponent<EnemyBehaviour>().SetStartingPosition(cells[cellX, cellY].transform.position);
     }
 
     /**

@@ -21,6 +21,7 @@ public class EnemyBehaviour : MonoBehaviour
     */
     void Start()    
     {
+        startingPoint = transform.position;
         agent = GetComponent<NavMeshAgent>();
         agent.isStopped = false;
         Patrol();

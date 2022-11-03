@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
         inputActions = new InputActions(); //create new InputActions
         movement = inputActions.Player.Movement; //get reference to movement action
         vision = inputActions.Player.Vision;
-        Cursor.lockState = CursorLockMode.Locked;
+        startingPoint = transform.position;
     }
 
     //called when script enabled
