@@ -38,14 +38,8 @@ public class EnemyBehaviour : MonoBehaviour
         GetComponent<Rigidbody>().velocity = Vector3.zero;
         agent.velocity = Vector3.zero;
         agent.Warp(startingPoint);
-        //transform.position = startingPoint;
         agent.isStopped = false;
         Patrol();
-    }
-
-    public void SetStartingPosition(Vector3 position){
-        transform.position = position;
-        print(position);
     }
 
     /**

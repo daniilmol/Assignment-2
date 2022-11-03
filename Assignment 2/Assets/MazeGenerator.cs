@@ -52,10 +52,6 @@ public class MazeGenerator : MonoBehaviour {
     */
     private Vector3 playerScale;
     /**
-    * Input actions for reset
-    */
-    private InputActions inputActions;
-    /**
     * Exit cell index
     */
     private int exitIndex;
@@ -78,35 +74,8 @@ public class MazeGenerator : MonoBehaviour {
         playerScale.x = 0;
         playerScale.z = 0;
         Instantiate(player, cells[0, startPointZ].transform.position + playerScale, Quaternion.identity);
-        //player.GetComponent<PlayerController>().SetStartingPosition(cells[0, startPointZ].transform.position + playerScale);
         SpawnEnemy();
         Instantiate(trigger, cells[size - 1, exitIndex].transform.position, Quaternion.identity);
-    }
-
-    /**
-    * Binding input action
-    */
-    private void Awake()
-    {
-        inputActions = new InputActions(); //create new InputActions
-    }
-
-    /**
-    * Called when script enabled
-    */
-    private void OnEnable()
-    {
-        inputActions.World.Reset.performed += ResetPosition;
-        inputActions.World.Reset.Enable();
-    }
-
-    /**
-    * Called when script disabled
-    */
-    private void OnDisable()
-    {
-        inputActions.World.Reset.performed -= ResetPosition;
-        inputActions.World.Reset.Disable();
     }
 
     /**
@@ -117,17 +86,6 @@ public class MazeGenerator : MonoBehaviour {
         cellY = Random.Range(0, size);
         Instantiate(enemy, cells[cellX, cellY].transform.position, Quaternion.identity);
         //enemy.GetComponent<EnemyBehaviour>().SetStartingPosition(cells[cellX, cellY].transform.position);
-    }
-
-    /**
-    * Reset player and enemy to origenal position
-    */
-    private void ResetPosition(InputAction.CallbackContext obj) {
-        Debug.Log("Reset");
-        player.transform.position = cells[0, startPointZ].transform.position + playerScale;
-        player.transform.eulerAngles = new Vector3(0, 0, 0);
-        player.transform.GetChild(0).transform.eulerAngles = new Vector3(0, 0, 0);
-        enemy.transform.position = cells[cellX, cellY].transform.position;
     }
 
     /**

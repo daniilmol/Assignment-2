@@ -66,10 +66,6 @@ public class PlayerController : MonoBehaviour
         transform.GetChild(0).transform.eulerAngles = new Vector3(0, 0, 0);
     }
 
-    public void SetStartingPosition(Vector3 position){
-        startingPoint = position;
-    }
-
     //called every physics update
     private void FixedUpdate()
     {

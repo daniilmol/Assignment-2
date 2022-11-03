@@ -176,45 +176,6 @@
                     "isPartOfComposite": false
                 }
             ]
-        },
-        {
-            "name": "World",
-            "id": "035f8e22-c21c-46be-8ba7-812417ea8c9b",
-            "actions": [
-                {
-                    "name": "Reset",
-                    "type": "Button",
-                    "id": "e6871770-1d53-4eff-a79d-c16123ec8c86",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "c80c33bb-3e8c-4e5d-9af9-75c476cf4c2f",
-                    "path": "<Keyboard>/home",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Reset",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "439ada51-a6d9-40e8-b893-ac104d258409",
-                    "path": "<Gamepad>/buttonSouth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Reset",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
         }
     ],
     "controlSchemes": []

@@ -198,45 +198,6 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
-        },
-        {
-            ""name"": ""World"",
-            ""id"": ""035f8e22-c21c-46be-8ba7-812417ea8c9b"",
-            ""actions"": [
-                {
-                    ""name"": ""Reset"",
-                    ""type"": ""Button"",
-                    ""id"": ""e6871770-1d53-4eff-a79d-c16123ec8c86"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""c80c33bb-3e8c-4e5d-9af9-75c476cf4c2f"",
-                    ""path"": ""<Keyboard>/home"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Reset"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""439ada51-a6d9-40e8-b893-ac104d258409"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Reset"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
         }
     ],
     ""controlSchemes"": []
@@ -247,9 +208,6 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         m_Player_Vision = m_Player.FindAction("Vision", throwIfNotFound: true);
         m_Player_Ability = m_Player.FindAction("Ability", throwIfNotFound: true);
         m_Player_Reset = m_Player.FindAction("Reset", throwIfNotFound: true);
-        // World
-        m_World = asset.FindActionMap("World", throwIfNotFound: true);
-        m_World_Reset = m_World.FindAction("Reset", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -362,48 +320,11 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
-
-    // World
-    private readonly InputActionMap m_World;
-    private IWorldActions m_WorldActionsCallbackInterface;
-    private readonly InputAction m_World_Reset;
-    public struct WorldActions
-    {
-        private @InputActions m_Wrapper;
-        public WorldActions(@InputActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Reset => m_Wrapper.m_World_Reset;
-        public InputActionMap Get() { return m_Wrapper.m_World; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(WorldActions set) { return set.Get(); }
-        public void SetCallbacks(IWorldActions instance)
-        {
-            if (m_Wrapper.m_WorldActionsCallbackInterface != null)
-            {
-                @Reset.started -= m_Wrapper.m_WorldActionsCallbackInterface.OnReset;
-                @Reset.performed -= m_Wrapper.m_WorldActionsCallbackInterface.OnReset;
-                @Reset.canceled -= m_Wrapper.m_WorldActionsCallbackInterface.OnReset;
-            }
-            m_Wrapper.m_WorldActionsCallbackInterface = instance;
-            if (instance != null)
-            {
-                @Reset.started += instance.OnReset;
-                @Reset.performed += instance.OnReset;
-                @Reset.canceled += instance.OnReset;
-            }
-        }
-    }
-    public WorldActions @World => new WorldActions(this);
     public interface IPlayerActions
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnVision(InputAction.CallbackContext context);
         void OnAbility(InputAction.CallbackContext context);
-        void OnReset(InputAction.CallbackContext context);
-    }
-    public interface IWorldActions
-    {
         void OnReset(InputAction.CallbackContext context);
     }
 }
