@@ -35,6 +35,15 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Vision"",
+                    ""type"": ""Value"",
+                    ""id"": ""1cc21ff0-ab4a-43f9-a4ca-3d722fd02b71"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -103,6 +112,98 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7466d6ea-78c0-44c6-8a81-52f0a35405f3"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Vision"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""261ebe8e-7e46-4286-bbaa-ef6e598d3c40"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Vision"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""World"",
+            ""id"": ""035f8e22-c21c-46be-8ba7-812417ea8c9b"",
+            ""actions"": [
+                {
+                    ""name"": ""Reset"",
+                    ""type"": ""Button"",
+                    ""id"": ""e6871770-1d53-4eff-a79d-c16123ec8c86"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Wall"",
+                    ""type"": ""Button"",
+                    ""id"": ""98d947aa-06e8-4ab9-aa05-bc22f4abf8e0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""c80c33bb-3e8c-4e5d-9af9-75c476cf4c2f"",
+                    ""path"": ""<Keyboard>/home"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reset"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""439ada51-a6d9-40e8-b893-ac104d258409"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reset"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""41fd1a7a-0ed2-4dca-aaeb-4d7d546450a2"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Wall"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""649d6c91-2ddb-44d8-af25-1f9ed0982e47"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Wall"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -112,6 +213,11 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
+        m_Player_Vision = m_Player.FindAction("Vision", throwIfNotFound: true);
+        // World
+        m_World = asset.FindActionMap("World", throwIfNotFound: true);
+        m_World_Reset = m_World.FindAction("Reset", throwIfNotFound: true);
+        m_World_Wall = m_World.FindAction("Wall", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -172,11 +278,13 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Movement;
+    private readonly InputAction m_Player_Vision;
     public struct PlayerActions
     {
         private @InputActions m_Wrapper;
         public PlayerActions(@InputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
+        public InputAction @Vision => m_Wrapper.m_Player_Vision;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -189,6 +297,9 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @Movement.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
                 @Movement.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
                 @Movement.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMovement;
+                @Vision.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnVision;
+                @Vision.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnVision;
+                @Vision.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnVision;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -196,12 +307,62 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @Movement.started += instance.OnMovement;
                 @Movement.performed += instance.OnMovement;
                 @Movement.canceled += instance.OnMovement;
+                @Vision.started += instance.OnVision;
+                @Vision.performed += instance.OnVision;
+                @Vision.canceled += instance.OnVision;
             }
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // World
+    private readonly InputActionMap m_World;
+    private IWorldActions m_WorldActionsCallbackInterface;
+    private readonly InputAction m_World_Reset;
+    private readonly InputAction m_World_Wall;
+    public struct WorldActions
+    {
+        private @InputActions m_Wrapper;
+        public WorldActions(@InputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Reset => m_Wrapper.m_World_Reset;
+        public InputAction @Wall => m_Wrapper.m_World_Wall;
+        public InputActionMap Get() { return m_Wrapper.m_World; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(WorldActions set) { return set.Get(); }
+        public void SetCallbacks(IWorldActions instance)
+        {
+            if (m_Wrapper.m_WorldActionsCallbackInterface != null)
+            {
+                @Reset.started -= m_Wrapper.m_WorldActionsCallbackInterface.OnReset;
+                @Reset.performed -= m_Wrapper.m_WorldActionsCallbackInterface.OnReset;
+                @Reset.canceled -= m_Wrapper.m_WorldActionsCallbackInterface.OnReset;
+                @Wall.started -= m_Wrapper.m_WorldActionsCallbackInterface.OnWall;
+                @Wall.performed -= m_Wrapper.m_WorldActionsCallbackInterface.OnWall;
+                @Wall.canceled -= m_Wrapper.m_WorldActionsCallbackInterface.OnWall;
+            }
+            m_Wrapper.m_WorldActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Reset.started += instance.OnReset;
+                @Reset.performed += instance.OnReset;
+                @Reset.canceled += instance.OnReset;
+                @Wall.started += instance.OnWall;
+                @Wall.performed += instance.OnWall;
+                @Wall.canceled += instance.OnWall;
+            }
+        }
+    }
+    public WorldActions @World => new WorldActions(this);
     public interface IPlayerActions
     {
         void OnMovement(InputAction.CallbackContext context);
+        void OnVision(InputAction.CallbackContext context);
+    }
+    public interface IWorldActions
+    {
+        void OnReset(InputAction.CallbackContext context);
+        void OnWall(InputAction.CallbackContext context);
     }
 }

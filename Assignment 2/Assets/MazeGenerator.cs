@@ -22,6 +22,10 @@ public class MazeGenerator : MonoBehaviour {
     */
     [SerializeField] GameObject wall;
     /**
+    * Player prefab
+    */
+    [SerializeField] GameObject player;
+    /**
     * Enemy prefab
     */
     [SerializeField] GameObject enemy;
@@ -29,6 +33,11 @@ public class MazeGenerator : MonoBehaviour {
     * 2D Array of cells to represent each one by their x and z positions
     */
     public static Cell[,] cells;
+    /**
+    * Enemy prefab spawn position
+    */
+    private int cellX;
+    private int cellY;
 
     /**
     * Initializes 2D array, fills them, instantiates the cell prefabs
@@ -44,7 +53,7 @@ public class MazeGenerator : MonoBehaviour {
         DepthFirstSearch(startingCell);
         NavMeshBuilder.ClearAllNavMeshes();
         NavMeshBuilder.BuildNavMesh();
-        GameObject.Find("Main Camera").transform.position = new Vector3(0, 1, startPointZ);
+        player.transform.position = new Vector3(0, 1, startPointZ);
         SpawnEnemy();
     }
 
@@ -52,9 +61,17 @@ public class MazeGenerator : MonoBehaviour {
     * Spawns enemy in a random position
     */
     private void SpawnEnemy() {
-        int x = Random.Range(0, size);
-        int y = Random.Range(0, size);
-        Instantiate(enemy, cells[x, y].transform.position, Quaternion.identity);
+        cellX = Random.Range(0, size);
+        cellY = Random.Range(0, size);
+        Instantiate(enemy, cells[cellX, cellY].transform.position, Quaternion.identity);
+    }
+
+    /**
+    * Reset player and enemy to origenal position
+    */
+    public void ResetPosition() {
+        enemy.transform.position = cells[cellX, cellY].transform.position;
+        player.transform.position = new Vector3(0, 1, startPointZ);
     }
 
     /**
