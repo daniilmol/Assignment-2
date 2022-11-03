@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour
     {
         movement.Enable();
         vision.Enable();
+        inputActions.Player.Ability.performed += SwitchAbility;
+        inputActions.Player.Ability.Enable();
     }
 
     //called when script disabled
@@ -36,6 +38,13 @@ public class PlayerController : MonoBehaviour
     {
         movement.Disable();
         vision.Disable();
+        inputActions.Player.Ability.performed -= SwitchAbility;
+        inputActions.Player.Ability.Disable();
+    }
+
+    //switch of through wall ability
+    private void SwitchAbility(InputAction.CallbackContext obj) {
+        this.GetComponent<Collider>().enabled = !this.GetComponent<Collider>().enabled;
     }
 
     //called every physics update
@@ -48,7 +57,8 @@ public class PlayerController : MonoBehaviour
         // movement
         Vector2 v2 = movement.ReadValue<Vector2>(); //extract 2d input data
         float degree = this.transform.eulerAngles.y;
-        rb.velocity = transform.forward * v2.y * moveSpeed + transform.right * v2.x * moveSpeed; // move straight plus left or right
+        rb.velocity = transform.forward * v2.y * moveSpeed; // move straight
+        rb.velocity += transform.right * v2.x * moveSpeed; // move left or right
 
         // camera rotation (vertical)
         GameObject camera = this.gameObject.transform.GetChild(0).gameObject;

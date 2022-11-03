@@ -22,6 +22,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Ability",
+                    "type": "Button",
+                    "id": "70a9776f-f1a3-479b-ad90-0c8a755035a1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -112,6 +121,28 @@
                     "action": "Vision",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "04f4ccde-6f26-4ae6-a59c-10ed338b48f6",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Ability",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e1e2aaa7-2020-4f92-8389-7b0a97cd443a",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Ability",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -123,15 +154,6 @@
                     "name": "Reset",
                     "type": "Button",
                     "id": "e6871770-1d53-4eff-a79d-c16123ec8c86",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Wall",
-                    "type": "Button",
-                    "id": "98d947aa-06e8-4ab9-aa05-bc22f4abf8e0",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -158,28 +180,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Reset",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "41fd1a7a-0ed2-4dca-aaeb-4d7d546450a2",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Wall",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "649d6c91-2ddb-44d8-af25-1f9ed0982e47",
-                    "path": "<Gamepad>/buttonEast",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Wall",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

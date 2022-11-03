@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEditor.AI;
+using UnityEngine.InputSystem;
 
 public class MazeGenerator : MonoBehaviour {
     /**
@@ -38,6 +39,10 @@ public class MazeGenerator : MonoBehaviour {
     */
     private int cellX;
     private int cellY;
+    /**
+    * Input actions for reset
+    */
+    private InputActions inputActions;
 
     /**
     * Initializes 2D array, fills them, instantiates the cell prefabs
@@ -58,6 +63,32 @@ public class MazeGenerator : MonoBehaviour {
     }
 
     /**
+    * Binding input action
+    */
+    private void Awake()
+    {
+        inputActions = new InputActions(); //create new InputActions
+    }
+
+    /**
+    * Called when script enabled
+    */
+    private void OnEnable()
+    {
+        inputActions.World.Reset.performed += ResetPosition;
+        inputActions.World.Reset.Enable();
+    }
+
+    /**
+    * Called when script disabled
+    */
+    private void OnDisable()
+    {
+        inputActions.World.Reset.performed -= ResetPosition;
+        inputActions.World.Reset.Disable();
+    }
+
+    /**
     * Spawns enemy in a random position
     */
     private void SpawnEnemy() {
@@ -69,9 +100,12 @@ public class MazeGenerator : MonoBehaviour {
     /**
     * Reset player and enemy to origenal position
     */
-    public void ResetPosition() {
-        enemy.transform.position = cells[cellX, cellY].transform.position;
+    private void ResetPosition(InputAction.CallbackContext obj) {
+        Debug.Log("Reset");
         player.transform.position = new Vector3(0, 1, startPointZ);
+        player.transform.eulerAngles = new Vector3(0, 0, 0);
+        player.transform.GetChild(0).transform.eulerAngles = new Vector3(0, 0, 0);
+        enemy.transform.position = cells[cellX, cellY].transform.position;
     }
 
     /**

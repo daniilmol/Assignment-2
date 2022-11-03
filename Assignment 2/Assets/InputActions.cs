@@ -44,6 +44,15 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Ability"",
+                    ""type"": ""Button"",
+                    ""id"": ""70a9776f-f1a3-479b-ad90-0c8a755035a1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -134,6 +143,28 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Vision"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""04f4ccde-6f26-4ae6-a59c-10ed338b48f6"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Ability"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e1e2aaa7-2020-4f92-8389-7b0a97cd443a"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Ability"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -145,15 +176,6 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""name"": ""Reset"",
                     ""type"": ""Button"",
                     ""id"": ""e6871770-1d53-4eff-a79d-c16123ec8c86"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Wall"",
-                    ""type"": ""Button"",
-                    ""id"": ""98d947aa-06e8-4ab9-aa05-bc22f4abf8e0"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -182,28 +204,6 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Reset"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""41fd1a7a-0ed2-4dca-aaeb-4d7d546450a2"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Wall"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""649d6c91-2ddb-44d8-af25-1f9ed0982e47"",
-                    ""path"": ""<Gamepad>/buttonEast"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Wall"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -214,10 +214,10 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_Vision = m_Player.FindAction("Vision", throwIfNotFound: true);
+        m_Player_Ability = m_Player.FindAction("Ability", throwIfNotFound: true);
         // World
         m_World = asset.FindActionMap("World", throwIfNotFound: true);
         m_World_Reset = m_World.FindAction("Reset", throwIfNotFound: true);
-        m_World_Wall = m_World.FindAction("Wall", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -279,12 +279,14 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_Vision;
+    private readonly InputAction m_Player_Ability;
     public struct PlayerActions
     {
         private @InputActions m_Wrapper;
         public PlayerActions(@InputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @Vision => m_Wrapper.m_Player_Vision;
+        public InputAction @Ability => m_Wrapper.m_Player_Ability;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -300,6 +302,9 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @Vision.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnVision;
                 @Vision.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnVision;
                 @Vision.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnVision;
+                @Ability.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAbility;
+                @Ability.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAbility;
+                @Ability.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAbility;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -310,6 +315,9 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @Vision.started += instance.OnVision;
                 @Vision.performed += instance.OnVision;
                 @Vision.canceled += instance.OnVision;
+                @Ability.started += instance.OnAbility;
+                @Ability.performed += instance.OnAbility;
+                @Ability.canceled += instance.OnAbility;
             }
         }
     }
@@ -319,13 +327,11 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_World;
     private IWorldActions m_WorldActionsCallbackInterface;
     private readonly InputAction m_World_Reset;
-    private readonly InputAction m_World_Wall;
     public struct WorldActions
     {
         private @InputActions m_Wrapper;
         public WorldActions(@InputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Reset => m_Wrapper.m_World_Reset;
-        public InputAction @Wall => m_Wrapper.m_World_Wall;
         public InputActionMap Get() { return m_Wrapper.m_World; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -338,9 +344,6 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @Reset.started -= m_Wrapper.m_WorldActionsCallbackInterface.OnReset;
                 @Reset.performed -= m_Wrapper.m_WorldActionsCallbackInterface.OnReset;
                 @Reset.canceled -= m_Wrapper.m_WorldActionsCallbackInterface.OnReset;
-                @Wall.started -= m_Wrapper.m_WorldActionsCallbackInterface.OnWall;
-                @Wall.performed -= m_Wrapper.m_WorldActionsCallbackInterface.OnWall;
-                @Wall.canceled -= m_Wrapper.m_WorldActionsCallbackInterface.OnWall;
             }
             m_Wrapper.m_WorldActionsCallbackInterface = instance;
             if (instance != null)
@@ -348,9 +351,6 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @Reset.started += instance.OnReset;
                 @Reset.performed += instance.OnReset;
                 @Reset.canceled += instance.OnReset;
-                @Wall.started += instance.OnWall;
-                @Wall.performed += instance.OnWall;
-                @Wall.canceled += instance.OnWall;
             }
         }
     }
@@ -359,10 +359,10 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnVision(InputAction.CallbackContext context);
+        void OnAbility(InputAction.CallbackContext context);
     }
     public interface IWorldActions
     {
         void OnReset(InputAction.CallbackContext context);
-        void OnWall(InputAction.CallbackContext context);
     }
 }
