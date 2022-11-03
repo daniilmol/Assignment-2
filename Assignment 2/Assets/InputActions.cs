@@ -53,6 +53,15 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Reset"",
+                    ""type"": ""Button"",
+                    ""id"": ""de2b6a15-68b1-4f43-8a05-c3016131fada"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -165,6 +174,28 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Ability"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""24cfd4ef-8f25-45e4-a513-a899e317ac23"",
+                    ""path"": ""<Keyboard>/home"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reset"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c8c9f15a-1bdb-4166-a215-ffeefa4bd894"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reset"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -215,6 +246,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_Vision = m_Player.FindAction("Vision", throwIfNotFound: true);
         m_Player_Ability = m_Player.FindAction("Ability", throwIfNotFound: true);
+        m_Player_Reset = m_Player.FindAction("Reset", throwIfNotFound: true);
         // World
         m_World = asset.FindActionMap("World", throwIfNotFound: true);
         m_World_Reset = m_World.FindAction("Reset", throwIfNotFound: true);
@@ -280,6 +312,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_Vision;
     private readonly InputAction m_Player_Ability;
+    private readonly InputAction m_Player_Reset;
     public struct PlayerActions
     {
         private @InputActions m_Wrapper;
@@ -287,6 +320,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @Vision => m_Wrapper.m_Player_Vision;
         public InputAction @Ability => m_Wrapper.m_Player_Ability;
+        public InputAction @Reset => m_Wrapper.m_Player_Reset;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -305,6 +339,9 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @Ability.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAbility;
                 @Ability.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAbility;
                 @Ability.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAbility;
+                @Reset.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReset;
+                @Reset.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReset;
+                @Reset.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReset;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -318,6 +355,9 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @Ability.started += instance.OnAbility;
                 @Ability.performed += instance.OnAbility;
                 @Ability.canceled += instance.OnAbility;
+                @Reset.started += instance.OnReset;
+                @Reset.performed += instance.OnReset;
+                @Reset.canceled += instance.OnReset;
             }
         }
     }
@@ -360,6 +400,7 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnVision(InputAction.CallbackContext context);
         void OnAbility(InputAction.CallbackContext context);
+        void OnReset(InputAction.CallbackContext context);
     }
     public interface IWorldActions
     {

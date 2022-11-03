@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     private InputActions inputActions;
     private InputAction movement;
     private InputAction vision;
+    private Vector3 startingPoint;
     Rigidbody rb;
 
     private void Awake()
@@ -22,6 +23,7 @@ public class PlayerController : MonoBehaviour
         inputActions = new InputActions(); //create new InputActions
         movement = inputActions.Player.Movement; //get reference to movement action
         vision = inputActions.Player.Vision;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     //called when script enabled
@@ -31,6 +33,8 @@ public class PlayerController : MonoBehaviour
         vision.Enable();
         inputActions.Player.Ability.performed += SwitchAbility;
         inputActions.Player.Ability.Enable();
+        inputActions.Player.Reset.performed += ResetEntities;
+        inputActions.Player.Reset.Enable();
     }
 
     //called when script disabled
@@ -40,11 +44,27 @@ public class PlayerController : MonoBehaviour
         vision.Disable();
         inputActions.Player.Ability.performed -= SwitchAbility;
         inputActions.Player.Ability.Disable();
+        inputActions.Player.Reset.performed -= ResetEntities;
+        inputActions.Player.Reset.Disable();
     }
 
     //switch of through wall ability
     private void SwitchAbility(InputAction.CallbackContext obj) {
         this.GetComponent<Collider>().isTrigger = !this.GetComponent<Collider>().isTrigger;
+    }
+
+    private void ResetEntities(InputAction.CallbackContext obj){
+        GameObject enemy = GameObject.FindGameObjectWithTag("Enemy");
+        Reset();
+        enemy.GetComponent<EnemyBehaviour>().Reset();
+    }
+
+    private void Reset(){
+        transform.position = startingPoint;
+    }
+
+    public void SetStartingPosition(Vector3 position){
+        startingPoint = position;
     }
 
     //called every physics update

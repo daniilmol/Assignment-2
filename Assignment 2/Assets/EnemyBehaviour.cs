@@ -12,6 +12,9 @@ public class EnemyBehaviour : MonoBehaviour
     * Destination cell for patrolling
     */
     private Vector3 destination;
+    private int x;
+    private int y;
+    private Vector3 startingPoint;
 
     /**
     * Initializes AI and begin patrolling
@@ -19,6 +22,7 @@ public class EnemyBehaviour : MonoBehaviour
     void Start()    
     {
         agent = GetComponent<NavMeshAgent>();
+        agent.isStopped = false;
         Patrol();
     }
 
@@ -30,6 +34,19 @@ public class EnemyBehaviour : MonoBehaviour
         int y = Random.Range(0, MazeGenerator.cells.GetLength(0));
         destination = MazeGenerator.cells[x, y].transform.position;
         agent.destination = destination;
+    }
+
+    public void Reset(){
+        agent.ResetPath();
+        agent.isStopped = true;
+        transform.position = MazeGenerator.cells[x,y].transform.position;
+        agent.isStopped = false;
+        Patrol();
+    }
+
+    public void SetStartingPosition(Vector3 position){
+        transform.position = position;
+        print(position);
     }
 
     /**
