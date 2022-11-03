@@ -18,7 +18,7 @@ public class WinTrigger : MonoBehaviour
 
     public void RestartGame()
     {
-        Debug.Log("RESTART");
+        Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
