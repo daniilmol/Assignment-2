@@ -13,7 +13,7 @@ public class MazeGenerator : MonoBehaviour {
     /**
     * Start point location for z value
     */
-    [SerializeField] float startPointZ;
+    [SerializeField] int startPointZ;
     /**
     * Floor prefab
     */
@@ -44,6 +44,10 @@ public class MazeGenerator : MonoBehaviour {
     private int cellX;
     private int cellY;
     /**
+    * Player prefab scale (only get height for y)
+    */
+    private Vector3 playerScale;
+    /**
     * Input actions for reset
     */
     private InputActions inputActions;
@@ -62,7 +66,10 @@ public class MazeGenerator : MonoBehaviour {
         DepthFirstSearch(startingCell);
         NavMeshBuilder.ClearAllNavMeshes();
         NavMeshBuilder.BuildNavMesh();
-        player.transform.position = new Vector3(0, 1, startPointZ);
+        playerScale = player.transform.localScale;
+        playerScale.x = 0;
+        playerScale.z = 0;
+        Instantiate(player, cells[0, startPointZ].transform.position + playerScale, Quaternion.identity);
         SpawnEnemy();
     }
 
@@ -106,7 +113,7 @@ public class MazeGenerator : MonoBehaviour {
     */
     private void ResetPosition(InputAction.CallbackContext obj) {
         Debug.Log("Reset");
-        player.transform.position = new Vector3(0, 1, startPointZ);
+        player.transform.position = cells[0, startPointZ].transform.position + playerScale;
         player.transform.eulerAngles = new Vector3(0, 0, 0);
         player.transform.GetChild(0).transform.eulerAngles = new Vector3(0, 0, 0);
         enemy.transform.position = cells[cellX, cellY].transform.position;
