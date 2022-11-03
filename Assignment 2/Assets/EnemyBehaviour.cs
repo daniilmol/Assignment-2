@@ -16,14 +16,9 @@ public class EnemyBehaviour : MonoBehaviour
     private int y;
     private Vector3 startingPoint;
 
-    /**
-    * Initializes AI and begin patrolling
-    */
-    void Start()    
-    {
-        startingPoint = transform.position;
+    void Start(){
         agent = GetComponent<NavMeshAgent>();
-        agent.isStopped = false;
+        startingPoint = transform.position;
         Patrol();
     }
 
@@ -40,7 +35,10 @@ public class EnemyBehaviour : MonoBehaviour
     public void Reset(){
         agent.ResetPath();
         agent.isStopped = true;
-        transform.position = MazeGenerator.cells[x,y].transform.position;
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        agent.velocity = Vector3.zero;
+        agent.Warp(startingPoint);
+        //transform.position = startingPoint;
         agent.isStopped = false;
         Patrol();
     }

@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     private InputAction movement;
     private InputAction vision;
     private Vector3 startingPoint;
+    
     Rigidbody rb;
 
     private void Awake()
@@ -61,6 +62,8 @@ public class PlayerController : MonoBehaviour
 
     private void Reset(){
         transform.position = startingPoint;
+        transform.eulerAngles = new Vector3(0, 0, 0);
+        transform.GetChild(0).transform.eulerAngles = new Vector3(0, 0, 0);
     }
 
     public void SetStartingPosition(Vector3 position){
