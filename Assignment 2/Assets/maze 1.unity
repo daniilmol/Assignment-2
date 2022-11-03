@@ -158,7 +158,7 @@ MonoBehaviour:
   horizontalWall: {fileID: 2187565283492994992, guid: 85148198b98f03f4e8f7b5f8f47b11fd, type: 3}
   verticalWall: {fileID: 2187565283492994992, guid: 629f9e870f9ce5d428453434dd420232, type: 3}
   player: {fileID: 8123204582255376082, guid: 38e92eb0e20da74449dd20d009c3f3d8, type: 3}
-  enemy: {fileID: 6077433209843676620, guid: 789d91925bcf31145a7d721d1211b1d6, type: 3}
+  enemy: {fileID: 1919012471076396, guid: b13bf3686d83f8f4486061243df1f0d5, type: 3}
 --- !u!4 &622109178
 Transform:
   m_ObjectHideFlags: 0
