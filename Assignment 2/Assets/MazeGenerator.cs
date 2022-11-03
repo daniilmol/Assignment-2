@@ -19,9 +19,13 @@ public class MazeGenerator : MonoBehaviour {
     */
     [SerializeField] GameObject cell;
     /**
-    * Wall prefab made up of quads
+    * Horizontal wall prefab made up of quads
     */
-    [SerializeField] GameObject wall;
+    [SerializeField] GameObject horizontalWall;
+    /**
+    * Vertical wall prefab made up of quads
+    */
+    [SerializeField] GameObject verticalWall;
     /**
     * Player prefab
     */
@@ -132,7 +136,7 @@ public class MazeGenerator : MonoBehaviour {
         for(int y = 0; y < cellCount * 2; y++){
             if(y < cellCount){
                 if (y != entrance) {
-                    GameObject wall = Instantiate(this.wall, new Vector3(startingPoint, 1, y), Quaternion.identity);
+                    GameObject wall = Instantiate(this.verticalWall, new Vector3(startingPoint, 1, y), Quaternion.identity);
                     startPointZ = entrance;
                 }
             }
@@ -140,7 +144,7 @@ public class MazeGenerator : MonoBehaviour {
                 print(indexVariable);
                 if (indexVariable != exit)
                 {
-                    GameObject wall = Instantiate(this.wall, new Vector3(startingPoint + size, 1, indexVariable++), Quaternion.identity);
+                    GameObject wall = Instantiate(this.verticalWall, new Vector3(startingPoint + size, 1, indexVariable++), Quaternion.identity);
                 }
                 else {
                     indexVariable++;
@@ -150,9 +154,9 @@ public class MazeGenerator : MonoBehaviour {
         indexVariable = 0;
         for(float x = 0; x < cellCount * 2; x++){
             if(x < cellCount){
-                GameObject wall = Instantiate(this.wall, new Vector3(x, 1, startingPoint), Quaternion.Euler(0, 90f, 0));
+                GameObject wall = Instantiate(this.horizontalWall, new Vector3(x, 1, startingPoint), Quaternion.Euler(0, 90f, 0));
             }else{
-                GameObject wall = Instantiate(this.wall, new Vector3(indexVariable++, 1, startingPoint + size), Quaternion.Euler(0, 90f, 0));
+                GameObject wall = Instantiate(this.horizontalWall, new Vector3(indexVariable++, 1, startingPoint + size), Quaternion.Euler(0, 90f, 0));
             }
         }
     }
@@ -167,7 +171,7 @@ public class MazeGenerator : MonoBehaviour {
         int passedRows = 0;
         for(int y = indexVariable; passedRows < cellCount - 1; y++){
             if(y < cellCount){
-                GameObject wall = Instantiate(this.wall, new Vector3(startingPoint + passedRows, 1, y), Quaternion.identity);
+                GameObject wall = Instantiate(this.verticalWall, new Vector3(startingPoint + passedRows, 1, y), Quaternion.identity);
                 walls++;
             }else{
                 passedRows++;
@@ -178,7 +182,7 @@ public class MazeGenerator : MonoBehaviour {
         passedRows = 0;
         for(float x = indexVariable; passedRows < cellCount - 1; x++){
             if(x < cellCount){
-                GameObject wall = Instantiate(this.wall, new Vector3(x, 1, startingPoint + passedRows), Quaternion.Euler(0, 90f, 0));
+                GameObject wall = Instantiate(this.horizontalWall, new Vector3(x, 1, startingPoint + passedRows), Quaternion.Euler(0, 90f, 0));
                 walls++;
             }else{
                 passedRows++;
