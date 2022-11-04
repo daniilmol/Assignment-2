@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using UnityEditor.AI;
+// using UnityEditor.AI;
 using UnityEngine.InputSystem;
 
 public class MazeGenerator : MonoBehaviour {
@@ -68,8 +68,8 @@ public class MazeGenerator : MonoBehaviour {
         DrawWalls(size);
         Cell startingCell = GetStartingPoint();
         DepthFirstSearch(startingCell);
-        NavMeshBuilder.ClearAllNavMeshes();
-        NavMeshBuilder.BuildNavMesh();
+        // NavMeshBuilder.ClearAllNavMeshes();
+        // NavMeshBuilder.BuildNavMesh();
         playerScale = player.transform.localScale;
         playerScale.x = 0;
         playerScale.z = 0;
@@ -85,7 +85,6 @@ public class MazeGenerator : MonoBehaviour {
         cellX = Random.Range(0, size);
         cellY = Random.Range(0, size);
         Instantiate(enemy, cells[cellX, cellY].transform.position, Quaternion.identity);
-        //enemy.GetComponent<EnemyBehaviour>().SetStartingPosition(cells[cellX, cellY].transform.position);
     }
 
     /**

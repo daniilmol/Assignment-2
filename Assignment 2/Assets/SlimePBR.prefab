@@ -396,6 +396,7 @@ GameObject:
   - component: {fileID: -5974920356161430865}
   - component: {fileID: 5644817640879125163}
   - component: {fileID: 7152346010022923121}
+  - component: {fileID: 3961322386531170649}
   - component: {fileID: -6350472291706112521}
   m_Layer: 0
   m_Name: SlimePBR
@@ -452,10 +453,10 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!23 &5644817640879125163
 MeshRenderer:
@@ -464,7 +465,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1919012471076396}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -506,7 +507,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1919012471076396}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
@@ -521,6 +522,20 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!136 &3961322386531170649
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1919012471076396}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!114 &-6350472291706112521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -533,6 +548,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed7726515e1913f4ebcb3d688bb4d83a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationList:
+  - 90
+  - 180
+  - 270
+  moveSpeed: 1
 --- !u!1 &1989916952965676
 GameObject:
   m_ObjectHideFlags: 0
