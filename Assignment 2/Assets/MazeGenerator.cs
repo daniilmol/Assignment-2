@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using System.Linq;
 // using UnityEditor.AI;
 using UnityEngine.InputSystem;
@@ -63,13 +64,17 @@ public class MazeGenerator : MonoBehaviour {
     */
     void Start(){
         cells = new Cell[size,size];
-        DrawCells(cells);
+        DrawCells(cells); 
         DrawBorders(size);
         DrawWalls(size);
         Cell startingCell = GetStartingPoint();
         DepthFirstSearch(startingCell);
         // NavMeshBuilder.ClearAllNavMeshes();
         // NavMeshBuilder.BuildNavMesh();
+        NavMeshSurface nms = GameObject.Find("NavMeshBuilder").GetComponent<NavMeshSurface>();
+        nms.buildHeightMesh = true;
+        nms.BuildNavMesh();
+        print("PRINTED");
         playerScale = player.transform.localScale;
         playerScale.x = 0;
         playerScale.z = 0;

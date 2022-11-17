@@ -1,12 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.AI;
 public class EnemyBehaviour : MonoBehaviour
 {
+    private NavMeshAgent agent;
+    private Vector3 destination;
+    private Vector3 startingPoint;
+    void Start(){
+        agent = GetComponent<NavMeshAgent>();
+        startingPoint = transform.position;
+        Patrol();
+    }
+    private void Patrol(){
+        int x = Random.Range(0, MazeGenerator.cells.GetLength(0));
+        int y = Random.Range(0, MazeGenerator.cells.GetLength(0));
+        destination = MazeGenerator.cells[x, y].transform.position;
+        agent.destination = destination;
+    }
+
+    void Update()
+    {
+        if(Vector3.Distance(transform.position, destination) < 1){
+            Patrol();
+        }
+    }
+
+    public void Reset(){
+        agent.ResetPath();
+        agent.isStopped = true;
+        GetComponent<Rigidbody>().velocity = Vector3.zero;
+        agent.velocity = Vector3.zero;
+        agent.Warp(startingPoint);
+        agent.isStopped = false;
+        Patrol();
+    }
     /**
     * Destination cell for patrolling
-    */
+    
     private Vector3 startingPoint;
     private Rigidbody rb;
     public float[] rotationList = {90.0f, 180.0f, 270.0f};
@@ -24,7 +55,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     /**
     * Move straight until close to wall; Rotate randomly
-    */
+    
     void Update()
     {
         rb.velocity = transform.forward * moveSpeed;
@@ -43,5 +74,5 @@ public class EnemyBehaviour : MonoBehaviour
             float rotation = rotationList[Random.Range(0,3)];
             transform.eulerAngles = new Vector3(0, transform.eulerAngles.y + rotation, 0); // turn if face to entrence or exit
         }
-    }
+    }*/
 }

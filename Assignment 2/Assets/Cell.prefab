@@ -17,7 +17,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &6843528348424830255
 Transform:
@@ -110,8 +110,7 @@ GameObject:
   - component: {fileID: 5389097855535975194}
   - component: {fileID: 8754128686987407835}
   - component: {fileID: 1369509346679744312}
-  - component: {fileID: 8868224454781916455}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -211,16 +210,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rayCastPoint: {fileID: 1971396862549102263}
---- !u!65 &8868224454781916455
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2190178942387013055}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 10, y: 2.220446e-16, z: 10}
-  m_Center: {x: 0, y: 0, z: 0}
