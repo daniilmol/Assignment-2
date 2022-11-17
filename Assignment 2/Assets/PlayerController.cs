@@ -9,11 +9,13 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 2.0f;
     public float minTurnAngle = -90.0f;
     public float maxTurnAngle = 90.0f;
+    public GameObject ball;
     private float rotX = 0f;
     //create private internal references
     private InputActions inputActions;
     private InputAction movement;
     private InputAction vision;
+    private InputAction shoot;
     private Vector3 startingPoint;
     
     Rigidbody rb;
@@ -24,6 +26,7 @@ public class PlayerController : MonoBehaviour
         inputActions = new InputActions(); //create new InputActions
         movement = inputActions.Player.Movement; //get reference to movement action
         vision = inputActions.Player.Vision;
+        shoot = inputActions.Player.Shoot;
         startingPoint = transform.position;
     }
 
@@ -32,6 +35,7 @@ public class PlayerController : MonoBehaviour
     {
         movement.Enable();
         vision.Enable();
+        shoot.Enable();
         inputActions.Player.Ability.performed += SwitchAbility;
         inputActions.Player.Ability.Enable();
         inputActions.Player.Reset.performed += ResetEntities;
@@ -43,10 +47,17 @@ public class PlayerController : MonoBehaviour
     {
         movement.Disable();
         vision.Disable();
+        shoot.Disable();
         inputActions.Player.Ability.performed -= SwitchAbility;
         inputActions.Player.Ability.Disable();
         inputActions.Player.Reset.performed -= ResetEntities;
         inputActions.Player.Reset.Disable();
+        inputActions.Player.Shoot.performed -= Shoot;
+        inputActions.Player.Shoot.Disable(); 
+    }
+
+    private void Shoot(InputAction.CallbackContext obj){
+
     }
 
     //switch of through wall ability
