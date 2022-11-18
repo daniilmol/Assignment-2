@@ -69,8 +69,6 @@ public class MazeGenerator : MonoBehaviour {
         DrawWalls(size);
         Cell startingCell = GetStartingPoint();
         DepthFirstSearch(startingCell);
-        // NavMeshBuilder.ClearAllNavMeshes();
-        // NavMeshBuilder.BuildNavMesh();
         NavMeshSurface nms = GameObject.Find("NavMeshBuilder").GetComponent<NavMeshSurface>();
         nms.buildHeightMesh = true;
         nms.BuildNavMesh();
@@ -81,6 +79,7 @@ public class MazeGenerator : MonoBehaviour {
         Instantiate(player, cells[0, startPointZ].transform.position + playerScale, Quaternion.identity);
         SpawnEnemy();
         Instantiate(trigger, cells[size - 1, exitIndex].transform.position, Quaternion.identity);
+        DontDestroyOnLoad(gameObject);
     }
 
     /**
@@ -99,6 +98,7 @@ public class MazeGenerator : MonoBehaviour {
         for(int x = 0; x < size; x++){
             for(int y = 0; y < size; y++){
                 GameObject createdCell = Instantiate(this.cell, new Vector3(x, 0, y), Quaternion.identity);
+                createdCell.transform.parent = gameObject.transform;
                 createdCell.GetComponent<Cell>().SetCoordinates(x, y);
                 cell[x, y] = createdCell.GetComponent<Cell>();
             }
@@ -118,6 +118,7 @@ public class MazeGenerator : MonoBehaviour {
             if(y < cellCount){
                 if (y != entrance) {
                     GameObject wall = Instantiate(this.verticalWall, new Vector3(startingPoint, 1, y), Quaternion.identity);
+                    wall.transform.parent = gameObject.transform;
                 }else{
                     startPointZ = entrance;
                 }
@@ -127,6 +128,7 @@ public class MazeGenerator : MonoBehaviour {
                 if (indexVariable != exit)
                 {
                     GameObject wall = Instantiate(this.verticalWall, new Vector3(startingPoint + size, 1, indexVariable++), Quaternion.identity);
+                    wall.transform.parent = gameObject.transform;
                 }
                 else {
                     indexVariable++;
@@ -137,8 +139,10 @@ public class MazeGenerator : MonoBehaviour {
         for(float x = 0; x < cellCount * 2; x++){
             if(x < cellCount){
                 GameObject wall = Instantiate(this.horizontalWall, new Vector3(x, 1, startingPoint), Quaternion.Euler(0, 90f, 0));
+                wall.transform.parent = gameObject.transform;
             }else{
                 GameObject wall = Instantiate(this.horizontalWall, new Vector3(indexVariable++, 1, startingPoint + size), Quaternion.Euler(0, 90f, 0));
+                wall.transform.parent = gameObject.transform;
             }
         }
     }
@@ -154,6 +158,7 @@ public class MazeGenerator : MonoBehaviour {
         for(int y = indexVariable; passedRows < cellCount - 1; y++){
             if(y < cellCount){
                 GameObject wall = Instantiate(this.verticalWall, new Vector3(startingPoint + passedRows, 1, y), Quaternion.identity);
+                wall.transform.parent = gameObject.transform;
                 walls++;
             }else{
                 passedRows++;
@@ -165,6 +170,7 @@ public class MazeGenerator : MonoBehaviour {
         for(float x = indexVariable; passedRows < cellCount - 1; x++){
             if(x < cellCount){
                 GameObject wall = Instantiate(this.horizontalWall, new Vector3(x, 1, startingPoint + passedRows), Quaternion.Euler(0, 90f, 0));
+                wall.transform.parent = gameObject.transform;
                 walls++;
             }else{
                 passedRows++;
@@ -240,5 +246,16 @@ public class MazeGenerator : MonoBehaviour {
                 Destroy(rayHit.collider.gameObject);
             }
         }
+    }
+
+    public void RespawnEnemy(){
+        cellX = Random.Range(0, size);
+        cellY = Random.Range(0, size);
+        StartCoroutine(RespawnCooldown());
+    }
+
+    private IEnumerator RespawnCooldown(){
+        yield return new WaitForSeconds(5);
+        Instantiate(enemy, cells[cellX, cellY].transform.position, Quaternion.identity);
     }
 }

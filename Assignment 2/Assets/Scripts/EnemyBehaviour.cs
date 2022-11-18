@@ -7,9 +7,18 @@ public class EnemyBehaviour : MonoBehaviour
     private NavMeshAgent agent;
     private Vector3 destination;
     private Vector3 startingPoint;
+    private float health;
+    private MazeGenerator mazeGenerator;
+    [SerializeField] AudioClip deathSound;
+    [SerializeField] AudioClip spawnSound;
+    private float x;
+    private float y;
     void Start(){
+        mazeGenerator = GameObject.Find("MazeGenerator").GetComponent<MazeGenerator>();
+        health = 3;
         agent = GetComponent<NavMeshAgent>();
         startingPoint = transform.position;
+        GetComponent<AudioSource>().PlayOneShot(spawnSound);
         Patrol();
     }
     private void Patrol(){
@@ -34,6 +43,14 @@ public class EnemyBehaviour : MonoBehaviour
         agent.Warp(startingPoint);
         agent.isStopped = false;
         Patrol();
+    }
+    public void TakeDamage(){
+        health--;
+        if(health <= 0){
+            mazeGenerator.RespawnEnemy();
+            GetComponent<AudioSource>().PlayOneShot(deathSound);
+            Destroy(gameObject);
+        }
     }
     /**
     * Destination cell for patrolling

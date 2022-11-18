@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public float minTurnAngle = -90.0f;
     public float maxTurnAngle = 90.0f;
     public GameObject ball;
+    public Camera playerCamera;
     private float rotX = 0f;
     //create private internal references
     private InputActions inputActions;
@@ -17,7 +18,7 @@ public class PlayerController : MonoBehaviour
     private InputAction vision;
     private InputAction shoot;
     private Vector3 startingPoint;
-    
+
     Rigidbody rb;
 
     private void Awake()
@@ -28,6 +29,7 @@ public class PlayerController : MonoBehaviour
         vision = inputActions.Player.Vision;
         shoot = inputActions.Player.Shoot;
         startingPoint = transform.position;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     //called when script enabled
@@ -40,6 +42,8 @@ public class PlayerController : MonoBehaviour
         inputActions.Player.Ability.Enable();
         inputActions.Player.Reset.performed += ResetEntities;
         inputActions.Player.Reset.Enable();
+        inputActions.Player.Shoot.performed += Shoot;
+        inputActions.Player.Shoot.Enable(); 
     }
 
     //called when script disabled
@@ -57,7 +61,14 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Shoot(InputAction.CallbackContext obj){
-
+        print("Shoot");
+        float spawnDistance = 0.4f;
+        Vector3 desiredDirection = Vector3.Normalize(new Vector3(transform.forward.x, transform.position.y, transform.forward.z));
+        Vector3 spawnPosition = transform.position + desiredDirection * spawnDistance;
+        spawnPosition.y = 0.5f;
+        Quaternion playerRotation = new Quaternion(playerCamera.transform.rotation.x, playerCamera.transform.rotation.y, playerCamera.transform.rotation.z, 1);
+        GameObject projectile = (GameObject)Instantiate(ball, spawnPosition, Quaternion.identity);
+        projectile.GetComponent<Rigidbody>().AddForce(desiredDirection * 200f * Time.fixedDeltaTime, ForceMode.Impulse);
     }
 
     //switch of through wall ability
