@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BGMController : MonoBehaviour
 {
-    bool f = false;
     [SerializeField] private AudioSource bgm;
     // Start is called before the first frame update
     void Start()

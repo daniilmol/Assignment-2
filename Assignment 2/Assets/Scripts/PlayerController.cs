@@ -104,15 +104,15 @@ public class PlayerController : MonoBehaviour
         rb.velocity = transform.forward * v2.y * moveSpeed; // move straight
         rb.velocity += transform.right * v2.x * moveSpeed; // move left or right
 
-        //if (v2.x != 0 || v2.y != 0)
+        //if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
         //{
-        //    walkSound.Play();
-        //    //Debug.Log("play");
+        //    walkSound.enabled = true;
+        //    Debug.Log("p");
         //}
-        //else if (v2.x == 0 && v2.y == 0)
+        //else
         //{
-        //    walkSound.Stop();
-        //    //Debug.Log("Stop");
+        //    walkSound.enabled = false;
+        //    Debug.Log("s");
         //}
 
         // camera rotation (vertical)
@@ -126,7 +126,6 @@ public class PlayerController : MonoBehaviour
     {
         if(collision.transform.tag == "Wall")
         {
-            Debug.Log("col");
             hitWallSound.Play();
         }
     }
