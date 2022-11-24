@@ -190,7 +190,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6d84b4d3508aace49ba14a797664bfb6, type: 2}
+  - {fileID: 2100000, guid: 22a948b413f1ec347874ed817379b3eb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -578,7 +578,7 @@ MonoBehaviour:
   maxTurnAngle: 90
   ball: {fileID: 8492095437752979310, guid: cb6fece65b87d944ca64fdb3662e3cf6, type: 3}
   playerCamera: {fileID: 8123204581688715178}
-  walkSound: {fileID: 4478084096471369218}
+  walkSound: {fileID: 7549124172672756271}
   hitWallSound: {fileID: 5781334982064191999}
 --- !u!114 &3776500140642563167
 MonoBehaviour:
