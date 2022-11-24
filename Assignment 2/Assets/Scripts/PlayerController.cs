@@ -18,6 +18,9 @@ public class PlayerController : MonoBehaviour
     private InputAction vision;
     private InputAction shoot;
     private Vector3 startingPoint;
+    
+    [SerializeField] private AudioSource walkSound;
+    [SerializeField] private AudioSource hitWallSound;
 
     Rigidbody rb;
 
@@ -101,10 +104,30 @@ public class PlayerController : MonoBehaviour
         rb.velocity = transform.forward * v2.y * moveSpeed; // move straight
         rb.velocity += transform.right * v2.x * moveSpeed; // move left or right
 
+        //if (v2.x != 0 || v2.y != 0)
+        //{
+        //    walkSound.Play();
+        //    //Debug.Log("play");
+        //}
+        //else if (v2.x == 0 && v2.y == 0)
+        //{
+        //    walkSound.Stop();
+        //    //Debug.Log("Stop");
+        //}
+
         // camera rotation (vertical)
         GameObject camera = this.gameObject.transform.GetChild(0).gameObject;
         rotX += visionV2.y * turnSpeed;
         rotX = Mathf.Clamp(rotX, minTurnAngle, maxTurnAngle);
         camera.transform.eulerAngles = new Vector3(-rotX, this.transform.eulerAngles.y, 0);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.transform.tag == "Wall")
+        {
+            Debug.Log("col");
+            hitWallSound.Play();
+        }
     }
 }
