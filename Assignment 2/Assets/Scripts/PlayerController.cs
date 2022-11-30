@@ -18,6 +18,10 @@ public class PlayerController : MonoBehaviour
     private InputAction vision;
     private InputAction shoot;
     private Vector3 startingPoint;
+    private bool walkSoundFlag = false;
+    
+    [SerializeField] private AudioSource walkSound;
+    [SerializeField] private AudioSource hitWallSound;
 
     Rigidbody rb;
 
@@ -98,13 +102,42 @@ public class PlayerController : MonoBehaviour
         // movement
         Vector2 v2 = movement.ReadValue<Vector2>(); //extract 2d input data
         float degree = this.transform.eulerAngles.y;
-        rb.velocity = transform.forward * v2.y * moveSpeed; // move straight
-        rb.velocity += transform.right * v2.x * moveSpeed; // move left or right
+        //rb.velocity = transform.forward * v2.y * moveSpeed; // move straight
+        //rb.velocity += transform.right * v2.x * moveSpeed; // move left or right
+
+        Move(v2);
+
+        // stop walksound when player stop
+        if(v2.x == 0 && v2.y == 0)
+        {
+            walkSound.Stop();
+            walkSoundFlag = true;
+        }
 
         // camera rotation (vertical)
         GameObject camera = this.gameObject.transform.GetChild(0).gameObject;
         rotX += visionV2.y * turnSpeed;
         rotX = Mathf.Clamp(rotX, minTurnAngle, maxTurnAngle);
         camera.transform.eulerAngles = new Vector3(-rotX, this.transform.eulerAngles.y, 0);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.transform.tag == "Wall")
+        {
+            hitWallSound.Play();
+        }
+    }
+
+    private void Move(Vector2 v2)
+    {
+        rb.velocity = transform.forward * v2.y * moveSpeed; // move straight
+        rb.velocity += transform.right * v2.x * moveSpeed; // move left or right
+
+        if (walkSoundFlag)
+        {
+            walkSound.Play();
+            walkSoundFlag = false;
+        }
     }
 }
