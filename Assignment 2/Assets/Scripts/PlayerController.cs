@@ -66,9 +66,9 @@ public class PlayerController : MonoBehaviour
         Vector3 desiredDirection = Vector3.Normalize(new Vector3(transform.forward.x, transform.position.y, transform.forward.z));
         Vector3 spawnPosition = transform.position + desiredDirection * spawnDistance;
         spawnPosition.y = 0.5f;
-        Quaternion playerRotation = new Quaternion(playerCamera.transform.rotation.x, playerCamera.transform.rotation.y, playerCamera.transform.rotation.z, 1);
-        GameObject projectile = (GameObject)Instantiate(ball, spawnPosition, Quaternion.identity);
-        projectile.GetComponent<Rigidbody>().AddForce(desiredDirection * 200f * Time.fixedDeltaTime, ForceMode.Impulse);
+        Quaternion playerRotation = new Quaternion(playerCamera.transform.rotation.x, transform.rotation.y, playerCamera.transform.rotation.z, 1);
+        GameObject projectile = (GameObject)Instantiate(ball, spawnPosition, playerRotation);
+        projectile.GetComponent<Rigidbody>().AddRelativeForce(desiredDirection * 200f * Time.fixedDeltaTime, ForceMode.Impulse);
     }
 
     //switch of through wall ability

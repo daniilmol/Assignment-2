@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 622109177}
   m_Layer: 0
   m_Name: MazeGenerator
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -160,6 +160,7 @@ MonoBehaviour:
   player: {fileID: 8123204582255376082, guid: 38e92eb0e20da74449dd20d009c3f3d8, type: 3}
   enemy: {fileID: 6077433209843676620, guid: 789d91925bcf31145a7d721d1211b1d6, type: 3}
   trigger: {fileID: 35957274895577177, guid: 2d087431e5b54094fbd39b6eab348bae, type: 3}
+  doorMaterial: {fileID: 2100000, guid: 0b7dd8513656d9c4fa0cbe919fb9fa8d, type: 2}
 --- !u!4 &622109178
 Transform:
   m_ObjectHideFlags: 0

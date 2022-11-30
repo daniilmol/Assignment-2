@@ -39,6 +39,7 @@ public class MazeGenerator : MonoBehaviour {
     * Win trigger prefab
     */
     [SerializeField] GameObject trigger;
+    [SerializeField] Material doorMaterial;
     /**
     * 2D Array of cells to represent each one by their x and z positions
     */
@@ -65,8 +66,8 @@ public class MazeGenerator : MonoBehaviour {
     void Start(){
         cells = new Cell[size,size];
         DrawCells(cells); 
-        DrawBorders(size);
         DrawWalls(size);
+        DrawBorders(size);
         Cell startingCell = GetStartingPoint();
         DepthFirstSearch(startingCell);
         NavMeshSurface nms = GameObject.Find("NavMeshBuilder").GetComponent<NavMeshSurface>();
@@ -81,6 +82,10 @@ public class MazeGenerator : MonoBehaviour {
         Instantiate(trigger, cells[size - 1, exitIndex].transform.position, Quaternion.identity);
         DontDestroyOnLoad(gameObject);
     }
+
+    private void SpawnDoor(){
+
+        }
 
     /**
     * Spawns enemy in a random position
