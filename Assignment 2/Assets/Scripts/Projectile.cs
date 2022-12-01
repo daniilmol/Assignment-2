@@ -18,6 +18,7 @@ public class Projectile : MonoBehaviour
         playerstats = player.GetComponent<PlayerStats>();
         scoreText = GameObject.Find("Score");
         timeToDestroy = 2f;
+        //StartCoroutine(DestroyBall());
     }
 
     private void OnCollisionEnter(Collision other) {
@@ -27,15 +28,15 @@ public class Projectile : MonoBehaviour
             scoreText.GetComponent<TextMeshProUGUI>().text = "Score: " + playerstats.GetScore();
             print("Hit Enemy");
             enemy.GetComponent<EnemyBehaviour>().TakeDamage();
-            Destroy(this);
+            Destroy(this.gameObject);
         }else if(other.gameObject.tag == "Floor"){
             StartCoroutine(DestroyBall());
         }
     }
 
-    private IEnumerator DestroyBall(){
+    public IEnumerator DestroyBall(){
         yield return new WaitForSeconds(timeToDestroy);
-        Destroy(this);
+        Destroy(this.gameObject);
     }
 
 }
