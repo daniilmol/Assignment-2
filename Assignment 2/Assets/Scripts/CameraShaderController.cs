@@ -6,15 +6,15 @@ public class CameraShaderController : MonoBehaviour
 {
     private FullScreenShader fullScreenShader;
     private FogScreenShader fogScreenShader;
-    [SerializeField] private AudioSource dayBgm;
-    [SerializeField] private AudioSource nighBgm;
+    BGMController bgmController;
 
     // Start is called before the first frame update
     void Start()
     {
         fullScreenShader = this.GetComponent<FullScreenShader>();
         fogScreenShader = this.GetComponent<FogScreenShader>();
-        dayBgm.Play();
+        bgmController = GameObject.Find("BGMController").GetComponent<BGMController>();
+        bgmController.PlayDayDgm();
     }
 
     // Update is called once per frame
@@ -23,16 +23,16 @@ public class CameraShaderController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.U))
         {
             fullScreenShader.enabled = !fullScreenShader.enabled;
-            
-            if(fullScreenShader.enabled)
+
+            if (fullScreenShader.enabled)
             {
-                dayBgm.Stop();
-                nighBgm.Play();
+                bgmController.StopDayDgm();
+                bgmController.PlayNightBgm();
             }
             else
             {
-                nighBgm.Stop();
-                dayBgm.Play();
+                bgmController.StopNightBgm();
+                bgmController.PlayDayDgm();
             }
         }
 
@@ -40,15 +40,15 @@ public class CameraShaderController : MonoBehaviour
         {
             fogScreenShader.enabled = !fogScreenShader.enabled;
 
-            if(fogScreenShader.enabled)
+            if (fogScreenShader.enabled)
             {
-                dayBgm.volume = 0.5f;
-                nighBgm.volume = 0.5f;
+                bgmController.SetDayBgmVolume(0.25f);
+                bgmController.SetNightVolume(0.25f);
             }
             else
             {
-                dayBgm.volume = 1f;
-                nighBgm.volume = 1f;
+                bgmController.SetDayBgmVolume(0.5f);
+                bgmController.SetNightVolume(0.5f);
             }
         }
     }

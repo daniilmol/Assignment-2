@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     private InputAction shoot;
     private Vector3 startingPoint;
     private bool walkSoundFlag = false;
-    
+
     [SerializeField] private AudioSource walkSound;
     [SerializeField] private AudioSource hitWallSound;
     [SerializeField] Transform spawnPoint;
