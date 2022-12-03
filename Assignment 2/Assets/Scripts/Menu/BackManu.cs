@@ -17,6 +17,7 @@ public class BackManu : MonoBehaviour
 
     public void BackMainManu(string sceneName)
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(sceneName);
     }
 }

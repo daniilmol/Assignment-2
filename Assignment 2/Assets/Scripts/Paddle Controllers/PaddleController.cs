@@ -67,14 +67,10 @@ public class PaddleController : MonoBehaviour
             {
                 winMsg.GetComponent<TextMeshProUGUI>().text = "Blue Player Wins!";
                 winMsg.enabled = true;
-                SceneManager.LoadScene("Maze");
-                Time.timeScale = 1;
             }
             else {
                 winMsg.GetComponent<TextMeshProUGUI>().text = "Red Player Wins!";
                 winMsg.enabled = true;
-                SceneManager.LoadScene("Maze");
-                Time.timeScale = 1;
             }
             backButton.SetActive(true);
             for (int a = 0; a < backButton.transform.childCount; a++)

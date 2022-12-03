@@ -124,14 +124,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 35957274895577170}
         m_TargetAssemblyTypeName: WinTrigger, Assembly-CSharp
-        m_MethodName: RestartGame
+        m_MethodName: BackMainManu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Main
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &35957273598705182
@@ -415,7 +415,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: RESTART
+  m_text: Back to Menu
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
