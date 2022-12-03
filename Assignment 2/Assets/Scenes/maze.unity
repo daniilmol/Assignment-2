@@ -284,7 +284,9 @@ MonoBehaviour:
   startPointZ: 0
   cell: {fileID: 2190178942387013055, guid: 69a6a9020a5bbfc48b0eb35fdebeac76, type: 3}
   horizontalWall: {fileID: 2187565283492994992, guid: 629f9e870f9ce5d428453434dd420232, type: 3}
+  PonghorizontalWall: {fileID: 2187565283492994992, guid: f0745b90c90a1e44aa1e55d8261f3961, type: 3}
   verticalWall: {fileID: 2187565283492994992, guid: 85148198b98f03f4e8f7b5f8f47b11fd, type: 3}
+  PongverticalWall: {fileID: 2187565283492994992, guid: f0745b90c90a1e44aa1e55d8261f3961, type: 3}
   player: {fileID: 8123204582255376082, guid: 38e92eb0e20da74449dd20d009c3f3d8, type: 3}
   enemy: {fileID: 6077433209843676620, guid: 789d91925bcf31145a7d721d1211b1d6, type: 3}
   trigger: {fileID: 35957274895577177, guid: 2d087431e5b54094fbd39b6eab348bae, type: 3}

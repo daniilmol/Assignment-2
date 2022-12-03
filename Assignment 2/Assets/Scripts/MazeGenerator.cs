@@ -23,10 +23,12 @@ public class MazeGenerator : MonoBehaviour {
     * Horizontal wall prefab made up of quads
     */
     [SerializeField] GameObject horizontalWall;
+    [SerializeField] GameObject PonghorizontalWall;
     /**
     * Vertical wall prefab made up of quads
     */
     [SerializeField] GameObject verticalWall;
+    [SerializeField] GameObject PongverticalWall;
     /**
     * Player prefab
     */
@@ -118,6 +120,7 @@ public class MazeGenerator : MonoBehaviour {
         int indexVariable = 0;
         int entrance = Random.Range(1, cellCount - 1);
         int exit = Random.Range(1, cellCount - 1);
+        int pong = Random.Range(1, cellCount - 1);
         exitIndex = exit;
         for(int y = 0; y < cellCount * 2; y++){
             if(y < cellCount){
@@ -138,6 +141,10 @@ public class MazeGenerator : MonoBehaviour {
                 else {
                     indexVariable++;
                 }
+            }
+            if (y == pong) {
+                GameObject wall = Instantiate(this.PongverticalWall, new Vector3(startingPoint + size, 1, indexVariable++), Quaternion.identity);
+                wall.transform.parent = gameObject.transform;
             }
         }
         indexVariable = 0;
