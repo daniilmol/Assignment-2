@@ -44,11 +44,13 @@ public class CameraShaderController : MonoBehaviour
             {
                 bgmController.SetDayBgmVolume(0.25f);
                 bgmController.SetNightVolume(0.25f);
+                bgmController.SetBgmVolume(0.25f);
             }
             else
             {
                 bgmController.SetDayBgmVolume(0.5f);
                 bgmController.SetNightVolume(0.5f);
+                bgmController.SetBgmVolume(0.5f);
             }
         }
     }

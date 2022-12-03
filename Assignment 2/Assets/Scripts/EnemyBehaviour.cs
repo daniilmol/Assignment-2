@@ -13,6 +13,11 @@ public class EnemyBehaviour : MonoBehaviour
     [SerializeField] AudioClip spawnSound;
     private float x;
     private float y;
+    private float distance;
+    GameObject go;
+    BGMController bgmController;
+    FogScreenShader fogScreenShader;
+
     void Start(){
         mazeGenerator = GameObject.Find("MazeGenerator").GetComponent<MazeGenerator>();
         health = 3;
@@ -20,6 +25,9 @@ public class EnemyBehaviour : MonoBehaviour
         startingPoint = transform.position;
         GetComponent<AudioSource>().PlayOneShot(spawnSound);
         Patrol();
+        go = GameObject.Find("Player(Clone)");
+        bgmController = GameObject.Find("BGMController").GetComponent<BGMController>();
+        fogScreenShader = GameObject.Find("Camera").GetComponent<FogScreenShader>();
     }
     private void Patrol(){
         int x = Random.Range(0, MazeGenerator.cells.GetLength(0));
@@ -33,6 +41,8 @@ public class EnemyBehaviour : MonoBehaviour
         if(Vector3.Distance(transform.position, destination) < 1){
             Patrol();
         }
+
+        PlayerDistance();
     }
 
     public void Reset(){
@@ -50,6 +60,28 @@ public class EnemyBehaviour : MonoBehaviour
             mazeGenerator.RespawnEnemy();
             GetComponent<AudioSource>().PlayOneShot(deathSound);
             Destroy(gameObject);
+        }
+    }
+
+    private void PlayerDistance()
+    {
+        
+        distance = (transform.position - go.transform.position).magnitude;
+
+        // 0.25f
+        if(distance <= 2 && fogScreenShader.enabled == false)
+        {
+            float volume = 0.5f - (distance * 0.25f);
+            bgmController.SetBgmVolume(0.5f + volume);
+            bgmController.SetDayBgmVolume(0.5f + volume);
+            bgmController.SetNightVolume(0.5f + volume);
+        }
+        else if(distance <= 2 && fogScreenShader.enabled == true)
+        {
+            float volume = 0.75f - (distance * 0.375f);
+            bgmController.SetBgmVolume(0.25f + volume);
+            bgmController.SetDayBgmVolume(0.25f + volume);
+            bgmController.SetNightVolume(0.25f + volume);
         }
     }
     /**

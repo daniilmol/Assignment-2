@@ -71,4 +71,19 @@ public class BGMController : MonoBehaviour
     {
         nightBgm.volume = volume;
     }
+
+    public float GetBgmVolume()
+    {
+        return bgm.volume;
+    }
+
+    public float GetDayBgmVolume()
+    {
+        return dayBgm.volume;
+    }
+
+    public float GetNightVolume()
+    {
+        return nightBgm.volume;
+    }
 }
