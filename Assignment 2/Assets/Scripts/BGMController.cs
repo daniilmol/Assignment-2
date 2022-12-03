@@ -9,11 +9,12 @@ public class BGMController : MonoBehaviour
     [SerializeField] private AudioSource nightBgm;
     [SerializeField] private AudioSource deathSound;
     [SerializeField] private AudioSource spawnSound;
+    private FullScreenShader fullScreenShader;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        fullScreenShader = GameObject.Find("Camera").GetComponent<FullScreenShader>();
     }
 
     // Update is called once per frame
@@ -21,12 +22,25 @@ public class BGMController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.O))
         {
-            bgm.Play();
+            StopAllMusic();
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
-            bgm.Stop();
+            if(fullScreenShader.enabled == true)
+            {
+                nightBgm.Play();
+            }
+            else
+            {
+                dayBgm.Play();
+            }
         }
+    }
+
+    public void StopAllMusic()
+    {
+        dayBgm.Stop();
+        nightBgm.Stop();
     }
 
     public void PlayBgm()
