@@ -18,16 +18,19 @@ public class EnemyBehaviour : MonoBehaviour
     BGMController bgmController;
     FogScreenShader fogScreenShader;
 
+
     void Start(){
         mazeGenerator = GameObject.Find("MazeGenerator").GetComponent<MazeGenerator>();
         health = 3;
         agent = GetComponent<NavMeshAgent>();
         startingPoint = transform.position;
         GetComponent<AudioSource>().PlayOneShot(spawnSound);
+
         Patrol();
         go = GameObject.Find("Player(Clone)");
         bgmController = GameObject.Find("BGMController").GetComponent<BGMController>();
         fogScreenShader = GameObject.Find("Camera").GetComponent<FogScreenShader>();
+        bgmController.PlaySpawnSound();
     }
     private void Patrol(){
         int x = Random.Range(0, MazeGenerator.cells.GetLength(0));
@@ -59,6 +62,7 @@ public class EnemyBehaviour : MonoBehaviour
         if(health <= 0){
             mazeGenerator.RespawnEnemy();
             GetComponent<AudioSource>().PlayOneShot(deathSound);
+            bgmController.PlayDeathSound();
             Destroy(gameObject);
         }
     }

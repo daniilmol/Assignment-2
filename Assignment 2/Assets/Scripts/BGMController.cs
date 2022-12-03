@@ -7,6 +7,8 @@ public class BGMController : MonoBehaviour
     [SerializeField] private AudioSource bgm;
     [SerializeField] private AudioSource dayBgm;
     [SerializeField] private AudioSource nightBgm;
+    [SerializeField] private AudioSource deathSound;
+    [SerializeField] private AudioSource spawnSound;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +42,16 @@ public class BGMController : MonoBehaviour
     public void PlayDayDgm()
     {
         dayBgm.Play();
+    }
+
+    public void PlayDeathSound()
+    {
+        deathSound.Play();
+    }
+
+    public void PlaySpawnSound()
+    {
+        spawnSound.Play();
     }
 
     public void StopDayDgm()
