@@ -6,13 +6,15 @@ public class CameraShaderController : MonoBehaviour
 {
     private FullScreenShader fullScreenShader;
     private FogScreenShader fogScreenShader;
-    BGMController bgmController;
+    private FlashlightShader flashlightShader;
+    private BGMController bgmController;
 
     // Start is called before the first frame update
     void Start()
     {
         fullScreenShader = this.GetComponent<FullScreenShader>();
         fogScreenShader = this.GetComponent<FogScreenShader>();
+        flashlightShader = this .GetComponent<FlashlightShader>();
         bgmController = GameObject.Find("BGMController").GetComponent<BGMController>();
         bgmController.PlayDayDgm();
     }
@@ -52,6 +54,11 @@ public class CameraShaderController : MonoBehaviour
                 bgmController.SetNightVolume(0.5f);
                 bgmController.SetBgmVolume(0.5f);
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            flashlightShader.enabled = !flashlightShader.enabled;
         }
     }
 }

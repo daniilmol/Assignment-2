@@ -5,6 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
 {
+    private void Start() {
+        DontDestroyOnLoadManager.DestroyAll();
+    }
+
     public void startGame(string sceneName) {
         SceneManager.LoadScene("maze");
     }
