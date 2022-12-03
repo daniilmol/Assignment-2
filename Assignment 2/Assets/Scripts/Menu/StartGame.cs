@@ -12,6 +12,7 @@ public class StartGame : MonoBehaviour
     private void Awake()
     {
         sg = this;
+        DontDestroyOnLoadManager.DisableAll();
     }
 
     public void startGame(string sceneName) {

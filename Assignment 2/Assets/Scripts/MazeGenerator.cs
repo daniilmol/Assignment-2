@@ -67,24 +67,32 @@ public class MazeGenerator : MonoBehaviour {
     * Begins DFS on a random point, builds a nav mesh for enemy and spawns enemy
     */
     void Start(){
-        cells = new Cell[size,size];
-        DrawCells(cells); 
-        DrawWalls(size);
-        DrawBorders(size);
-        Cell startingCell = GetStartingPoint();
-        DepthFirstSearch(startingCell);
-        NavMeshSurface nms = GameObject.Find("NavMeshBuilder").GetComponent<NavMeshSurface>();
-        nms.buildHeightMesh = true;
-        nms.BuildNavMesh();
-        print("PRINTED");
-        playerScale = player.transform.localScale;
-        playerScale.x = 0;
-        playerScale.z = 0;
-        Instantiate(player, cells[0, startPointZ].transform.position + playerScale, Quaternion.identity);
-        SpawnEnemy();
-        Instantiate(trigger, cells[size - 1, exitIndex].transform.position, Quaternion.identity);
-        // DontDestroyOnLoad(gameObject);
-        // Instantiate(gameObject);
+        if (!DontDestroyOnLoadManager.CheckDontDestoryExist())
+        {
+            cells = new Cell[size,size];
+            DrawCells(cells); 
+            DrawWalls(size);
+            DrawBorders(size);
+            Cell startingCell = GetStartingPoint();
+            DepthFirstSearch(startingCell);
+            NavMeshSurface nms = GameObject.Find("NavMeshBuilder").GetComponent<NavMeshSurface>();
+            nms.buildHeightMesh = true;
+            nms.BuildNavMesh();
+            print("PRINTED");
+            playerScale = player.transform.localScale;
+            playerScale.x = 0;
+            playerScale.z = 0;
+            DontDestroyOnLoadManager.DontDestroyOnLoad(Instantiate(player, cells[0, startPointZ].transform.position + playerScale, Quaternion.identity));
+            SpawnEnemy();
+            DontDestroyOnLoadManager.DontDestroyOnLoad(Instantiate(trigger, cells[size - 1, exitIndex].transform.position, Quaternion.identity));
+            // DontDestroyOnLoad(gameObject);
+            // Instantiate(gameObject);
+            DontDestroyOnLoadManager.DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            DontDestroyOnLoadManager.EnableAll();
+        }
     }
 
     private void SpawnDoor(){
@@ -97,7 +105,7 @@ public class MazeGenerator : MonoBehaviour {
     private void SpawnEnemy() {
         cellX = Random.Range(0, size);
         cellY = Random.Range(0, size);
-        Instantiate(enemy, cells[cellX, cellY].transform.position, Quaternion.identity);
+        DontDestroyOnLoadManager.DontDestroyOnLoad(Instantiate(enemy, cells[cellX, cellY].transform.position, Quaternion.identity));
     }
 
     /**
@@ -270,6 +278,6 @@ public class MazeGenerator : MonoBehaviour {
 
     private IEnumerator RespawnCooldown(){
         yield return new WaitForSeconds(5);
-        Instantiate(enemy, cells[cellX, cellY].transform.position, Quaternion.identity);
+        DontDestroyOnLoadManager.DontDestroyOnLoad(Instantiate(enemy, cells[cellX, cellY].transform.position, Quaternion.identity));
     }
 }
