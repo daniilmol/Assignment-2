@@ -24,12 +24,12 @@ public class MazeGenerator : MonoBehaviour {
     * Horizontal wall prefab made up of quads
     */
     [SerializeField] GameObject horizontalWall;
-    [SerializeField] GameObject PonghorizontalWall;
     /**
     * Vertical wall prefab made up of quads
     */
     [SerializeField] GameObject verticalWall;
-    [SerializeField] GameObject PongverticalWall;
+
+    [SerializeField] GameObject pongWall;
     /**
     * Player prefab
     */
@@ -42,7 +42,7 @@ public class MazeGenerator : MonoBehaviour {
     * Win trigger prefab
     */
     [SerializeField] GameObject trigger;
-    [SerializeField] Material doorMaterial;
+    [SerializeField] GameObject[] dontDestroyObjects;
     /**
     * 2D Array of cells to represent each one by their x and z positions
     */
@@ -85,9 +85,14 @@ public class MazeGenerator : MonoBehaviour {
             DontDestroyOnLoadManager.DontDestroyOnLoad(Instantiate(player, cells[0, startPointZ].transform.position + playerScale, Quaternion.identity));
             SpawnEnemy();
             DontDestroyOnLoadManager.DontDestroyOnLoad(Instantiate(trigger, cells[size - 1, exitIndex].transform.position, Quaternion.identity));
+            SpawnPongGameDoor();
             // DontDestroyOnLoad(gameObject);
             // Instantiate(gameObject);
             DontDestroyOnLoadManager.DontDestroyOnLoad(gameObject);
+            foreach (var obj in dontDestroyObjects)
+            {
+                DontDestroyOnLoadManager.DontDestroyOnLoad(obj);
+            }
         }
         else
         {
@@ -95,9 +100,16 @@ public class MazeGenerator : MonoBehaviour {
         }
     }
 
-    private void SpawnDoor(){
+    private void SpawnPongGameDoor(){
+        var pos = cells[size / 2, size / 2].transform.position;
+        RaycastHit hit;
 
+        if (Physics.Raycast(pos + new Vector3(0, 1, 0), Vector3.right, out hit, 100.0f))
+        {
+            DontDestroyOnLoadManager.DontDestroyOnLoad(Instantiate(pongWall, hit.transform.position, Quaternion.identity));
+            GameObject.Destroy(hit.collider.gameObject);
         }
+    }
 
     /**
     * Spawns enemy in a random position
@@ -130,7 +142,6 @@ public class MazeGenerator : MonoBehaviour {
         int indexVariable = 0;
         int entrance = Random.Range(1, cellCount - 1);
         int exit = Random.Range(1, cellCount - 1);
-        int pong = Random.Range(1, cellCount - 1);
         exitIndex = exit;
         for(int y = 0; y < cellCount * 2; y++){
             if(y < cellCount){
@@ -151,10 +162,6 @@ public class MazeGenerator : MonoBehaviour {
                 else {
                     indexVariable++;
                 }
-            }
-            if (y == pong) {
-                GameObject wall = Instantiate(this.PongverticalWall, new Vector3(startingPoint + size, 1, indexVariable++), Quaternion.identity);
-                wall.transform.parent = gameObject.transform;
             }
         }
         indexVariable = 0;

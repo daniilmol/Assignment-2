@@ -17,6 +17,8 @@ public class BackManu : MonoBehaviour
 
     public void BackMainManu(string sceneName)
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         Time.timeScale = 1;
         SceneManager.LoadScene(sceneName);
     }

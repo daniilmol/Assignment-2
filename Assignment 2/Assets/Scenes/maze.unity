@@ -408,17 +408,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d750ca444cd25346bb50459968d3bb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: 5
+  size: 10
   startPointZ: 0
   cell: {fileID: 2190178942387013055, guid: 69a6a9020a5bbfc48b0eb35fdebeac76, type: 3}
   horizontalWall: {fileID: 2187565283492994992, guid: 629f9e870f9ce5d428453434dd420232, type: 3}
-  PonghorizontalWall: {fileID: 2187565283492994992, guid: f0745b90c90a1e44aa1e55d8261f3961, type: 3}
   verticalWall: {fileID: 2187565283492994992, guid: 85148198b98f03f4e8f7b5f8f47b11fd, type: 3}
-  PongverticalWall: {fileID: 2187565283492994992, guid: f0745b90c90a1e44aa1e55d8261f3961, type: 3}
+  pongWall: {fileID: 2187565283492994992, guid: f0745b90c90a1e44aa1e55d8261f3961, type: 3}
   player: {fileID: 8123204582255376082, guid: 38e92eb0e20da74449dd20d009c3f3d8, type: 3}
   enemy: {fileID: 6077433209843676620, guid: 789d91925bcf31145a7d721d1211b1d6, type: 3}
   trigger: {fileID: 35957274895577177, guid: 2d087431e5b54094fbd39b6eab348bae, type: 3}
-  doorMaterial: {fileID: 2100000, guid: 0b7dd8513656d9c4fa0cbe919fb9fa8d, type: 2}
+  dontDestroyObjects:
+  - {fileID: 1036437529}
+  - {fileID: 1541938606}
 --- !u!4 &622109178
 Transform:
   m_ObjectHideFlags: 0
@@ -434,6 +435,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1036437529 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4392162196061381463, guid: 08c8c0200f9a09845af848a74fd8269b, type: 3}
+  m_PrefabInstance: {fileID: 4392162196337730876}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1063114422
 GameObject:
   m_ObjectHideFlags: 0
@@ -883,7 +889,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 8f30917d0b818be468227c0bfb78b46a, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
