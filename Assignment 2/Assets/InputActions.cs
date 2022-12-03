@@ -229,6 +229,190 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Paddle"",
+            ""id"": ""a3e6c63b-e1e6-4ac3-8607-95680e2d2e7b"",
+            ""actions"": [
+                {
+                    ""name"": ""Movement"",
+                    ""type"": ""Value"",
+                    ""id"": ""2d7ff2a7-5ab3-4671-83ec-ff0c2059ec86"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Movement2"",
+                    ""type"": ""Value"",
+                    ""id"": ""ad3dd3e6-86dc-45ce-bce9-06ae3cf69cda"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""a28c6d4d-e4f3-41ca-a603-40212b6bf625"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""f0b0e5a1-160b-4469-929e-6e110b720a19"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""956fc6a1-7e7c-4cd2-b3b7-c5c1573c2581"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c7d668ec-0f03-442d-aff9-c459996c90fc"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""7ed023e3-24e1-495b-a71d-0ca58e55e263"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement2"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""807647a2-d42f-4750-befd-c6418b020667"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""4a2247f3-03e5-4e81-8b5a-acf22d6a3743"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f2824f71-58b7-4c26-a8b2-e9166071ec8b"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Movement2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""System"",
+            ""id"": ""59373332-d258-4741-b8a9-44ffa758d277"",
+            ""actions"": [
+                {
+                    ""name"": ""Console"",
+                    ""type"": ""Button"",
+                    ""id"": ""e472d556-dc0d-4e58-affd-8b2bccce5b73"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Exit"",
+                    ""type"": ""Button"",
+                    ""id"": ""c6be80c7-edd1-495c-b890-7a8533b1e92b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""f45e89ac-72c7-48ac-8e6a-595731599544"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Console"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d485cd5a-60e9-4437-bf94-791928719eb0"",
+                    ""path"": ""<Gamepad>/select"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Console"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""188c67f1-57c6-4820-a35f-cd682405facf"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Exit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""de8bb862-f5ec-4854-8f18-b3a6c1c71dc0"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Exit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -240,6 +424,14 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         m_Player_Ability = m_Player.FindAction("Ability", throwIfNotFound: true);
         m_Player_Reset = m_Player.FindAction("Reset", throwIfNotFound: true);
         m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
+        // Paddle
+        m_Paddle = asset.FindActionMap("Paddle", throwIfNotFound: true);
+        m_Paddle_Movement = m_Paddle.FindAction("Movement", throwIfNotFound: true);
+        m_Paddle_Movement2 = m_Paddle.FindAction("Movement2", throwIfNotFound: true);
+        // System
+        m_System = asset.FindActionMap("System", throwIfNotFound: true);
+        m_System_Console = m_System.FindAction("Console", throwIfNotFound: true);
+        m_System_Exit = m_System.FindAction("Exit", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -360,6 +552,88 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // Paddle
+    private readonly InputActionMap m_Paddle;
+    private IPaddleActions m_PaddleActionsCallbackInterface;
+    private readonly InputAction m_Paddle_Movement;
+    private readonly InputAction m_Paddle_Movement2;
+    public struct PaddleActions
+    {
+        private @InputActions m_Wrapper;
+        public PaddleActions(@InputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Movement => m_Wrapper.m_Paddle_Movement;
+        public InputAction @Movement2 => m_Wrapper.m_Paddle_Movement2;
+        public InputActionMap Get() { return m_Wrapper.m_Paddle; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PaddleActions set) { return set.Get(); }
+        public void SetCallbacks(IPaddleActions instance)
+        {
+            if (m_Wrapper.m_PaddleActionsCallbackInterface != null)
+            {
+                @Movement.started -= m_Wrapper.m_PaddleActionsCallbackInterface.OnMovement;
+                @Movement.performed -= m_Wrapper.m_PaddleActionsCallbackInterface.OnMovement;
+                @Movement.canceled -= m_Wrapper.m_PaddleActionsCallbackInterface.OnMovement;
+                @Movement2.started -= m_Wrapper.m_PaddleActionsCallbackInterface.OnMovement2;
+                @Movement2.performed -= m_Wrapper.m_PaddleActionsCallbackInterface.OnMovement2;
+                @Movement2.canceled -= m_Wrapper.m_PaddleActionsCallbackInterface.OnMovement2;
+            }
+            m_Wrapper.m_PaddleActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Movement.started += instance.OnMovement;
+                @Movement.performed += instance.OnMovement;
+                @Movement.canceled += instance.OnMovement;
+                @Movement2.started += instance.OnMovement2;
+                @Movement2.performed += instance.OnMovement2;
+                @Movement2.canceled += instance.OnMovement2;
+            }
+        }
+    }
+    public PaddleActions @Paddle => new PaddleActions(this);
+
+    // System
+    private readonly InputActionMap m_System;
+    private ISystemActions m_SystemActionsCallbackInterface;
+    private readonly InputAction m_System_Console;
+    private readonly InputAction m_System_Exit;
+    public struct SystemActions
+    {
+        private @InputActions m_Wrapper;
+        public SystemActions(@InputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Console => m_Wrapper.m_System_Console;
+        public InputAction @Exit => m_Wrapper.m_System_Exit;
+        public InputActionMap Get() { return m_Wrapper.m_System; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(SystemActions set) { return set.Get(); }
+        public void SetCallbacks(ISystemActions instance)
+        {
+            if (m_Wrapper.m_SystemActionsCallbackInterface != null)
+            {
+                @Console.started -= m_Wrapper.m_SystemActionsCallbackInterface.OnConsole;
+                @Console.performed -= m_Wrapper.m_SystemActionsCallbackInterface.OnConsole;
+                @Console.canceled -= m_Wrapper.m_SystemActionsCallbackInterface.OnConsole;
+                @Exit.started -= m_Wrapper.m_SystemActionsCallbackInterface.OnExit;
+                @Exit.performed -= m_Wrapper.m_SystemActionsCallbackInterface.OnExit;
+                @Exit.canceled -= m_Wrapper.m_SystemActionsCallbackInterface.OnExit;
+            }
+            m_Wrapper.m_SystemActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Console.started += instance.OnConsole;
+                @Console.performed += instance.OnConsole;
+                @Console.canceled += instance.OnConsole;
+                @Exit.started += instance.OnExit;
+                @Exit.performed += instance.OnExit;
+                @Exit.canceled += instance.OnExit;
+            }
+        }
+    }
+    public SystemActions @System => new SystemActions(this);
     public interface IPlayerActions
     {
         void OnMovement(InputAction.CallbackContext context);
@@ -367,5 +641,15 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
         void OnAbility(InputAction.CallbackContext context);
         void OnReset(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
+    }
+    public interface IPaddleActions
+    {
+        void OnMovement(InputAction.CallbackContext context);
+        void OnMovement2(InputAction.CallbackContext context);
+    }
+    public interface ISystemActions
+    {
+        void OnConsole(InputAction.CallbackContext context);
+        void OnExit(InputAction.CallbackContext context);
     }
 }

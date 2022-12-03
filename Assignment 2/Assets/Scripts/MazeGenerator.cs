@@ -5,6 +5,7 @@ using UnityEngine.AI;
 using System.Linq;
 // using UnityEditor.AI;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class MazeGenerator : MonoBehaviour {
     /**
@@ -83,6 +84,7 @@ public class MazeGenerator : MonoBehaviour {
         SpawnEnemy();
         Instantiate(trigger, cells[size - 1, exitIndex].transform.position, Quaternion.identity);
         DontDestroyOnLoad(gameObject);
+        //Instantiate(gameObject);
     }
 
     private void SpawnDoor(){
