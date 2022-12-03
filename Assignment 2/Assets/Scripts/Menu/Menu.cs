@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class Menu : MonoBehaviour
 {
     public void startGame(string sceneName) {
-        SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene("maze");
     }
 
     public void exitGame() {

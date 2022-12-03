@@ -7,6 +7,8 @@ public class CallPong : MonoBehaviour
 {
     void OnTriggerEnter(Collider cube)
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         SceneManager.LoadScene("PongMenu");
     }
 }

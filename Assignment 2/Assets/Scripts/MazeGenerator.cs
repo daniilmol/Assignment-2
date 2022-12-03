@@ -83,8 +83,8 @@ public class MazeGenerator : MonoBehaviour {
         Instantiate(player, cells[0, startPointZ].transform.position + playerScale, Quaternion.identity);
         SpawnEnemy();
         Instantiate(trigger, cells[size - 1, exitIndex].transform.position, Quaternion.identity);
-        DontDestroyOnLoad(gameObject);
-        //Instantiate(gameObject);
+        // DontDestroyOnLoad(gameObject);
+        // Instantiate(gameObject);
     }
 
     private void SpawnDoor(){

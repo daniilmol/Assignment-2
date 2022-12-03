@@ -12,6 +12,8 @@ public class WinTrigger : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             Time.timeScale = 0;
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
             canvas.GetComponent<Canvas>().enabled = true;
         }
     }
@@ -23,6 +25,7 @@ public class WinTrigger : MonoBehaviour
     }
 
     public void BackMainManu() {
+        Time.timeScale = 1;
         SceneManager.LoadScene("Main");
     }
 }

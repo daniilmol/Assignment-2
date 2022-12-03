@@ -18,6 +18,8 @@ public class PlayerStats : MonoBehaviour
 
     private void OnCollisionEnter(Collision other) {
         if(other.gameObject.tag == "Enemy"){
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
             SceneManager.LoadScene("Main");
         }
     }

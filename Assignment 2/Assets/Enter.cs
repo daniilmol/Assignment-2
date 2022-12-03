@@ -13,8 +13,7 @@ public class Enter : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        
-        Destroy(GameObject.Find("MazeGenerator"));
+    {       
+        // Destroy(GameObject.Find("MazeGenerator"));
     }
 }
