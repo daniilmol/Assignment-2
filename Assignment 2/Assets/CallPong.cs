@@ -5,20 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class CallPong : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     void OnTriggerEnter(Collider cube)
     {
-        Debug.Log("Hit");
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene("PongMenu");
     }
 }

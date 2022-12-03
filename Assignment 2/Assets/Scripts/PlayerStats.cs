@@ -18,7 +18,7 @@ public class PlayerStats : MonoBehaviour
 
     private void OnCollisionEnter(Collision other) {
         if(other.gameObject.tag == "Enemy"){
-            SceneManager.LoadScene("maze");
+            SceneManager.LoadScene("Main");
         }
     }
 }
