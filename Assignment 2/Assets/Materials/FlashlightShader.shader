@@ -1,4 +1,4 @@
-Shader "Unlit/NightShader"
+Shader "Unlit/flashlight"
 {
     Properties
     {
@@ -50,7 +50,13 @@ Shader "Unlit/NightShader"
                 fixed4 col = tex2D(_MainTex, i.uv);
                 // apply fog
                 // UNITY_APPLY_FOG(i.fogCoord, col);
-                return fixed4(col.x/4,col.y/4,col.z/4,col.w);
+                float x = col.x;
+                float y = col.y;
+                float z = col.z;
+                x += (1 - x) / 4;
+                y += (1 - y) / 4;
+                z += (1 - z) / 4;
+                return fixed4(x, y, z, col.w);
             }
             ENDCG
         }
